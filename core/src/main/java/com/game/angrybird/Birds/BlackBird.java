@@ -11,6 +11,7 @@ public class BlackBird implements Bird {
 
     private World world;
     private Batch batch;
+    private float speed;
 
     private TextureRegion bird;
 
@@ -53,6 +54,8 @@ public class BlackBird implements Bird {
         return bird;
     }
 
+    @Override
+    public void useSpecialAbility(){}
 
     @Override
     public Body create(BodyDef bodyDef, float x, float y, float radius) {

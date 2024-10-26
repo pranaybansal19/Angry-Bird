@@ -21,6 +21,7 @@ public interface Bird {
     Body create(BodyDef bodyDef, float x, float y, float radius);
     void draw(Body body, float width, float height);
     void destroy();
+    void useSpecialAbility();
 
     boolean isClicked(Body body, float x, float y);
 }
