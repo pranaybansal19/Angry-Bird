@@ -92,7 +92,7 @@ public class Level1 implements Level, Screen {
         blueBird = new BlueBird(world, batch);
         blackBird = new BlackBird(world, batch);
 
-        wood = new Glass(world, batch);
+        wood = new Wood(world, batch);
 
         ground = new Ground(world);
 
