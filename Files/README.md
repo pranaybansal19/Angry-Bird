@@ -126,8 +126,7 @@ level to unlock another level.
 
 - **Prerequisite** : Java (JDK) 8 or higher
 - Steps:
-  1. Clone the Repository/Download : `git clone https://github.com/pranaybansal19/Angry-Bird
-cd Angry-Bird`
+  1. Clone the Repository/Download : `git clone https://github.com/pranaybansal19/Angry-Bird`
   2. Build the project : `gradlew build`
   3. Run the project : `gradlew lwjgl3:run`
     
