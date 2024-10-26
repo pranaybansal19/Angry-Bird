@@ -67,7 +67,7 @@ public class LoadingScreen implements Screen {
 
         float elapsedTime = (TimeUtils.nanoTime() - startTime) / 1000000000.0f;
 
-        progress = elapsedTime / 2f;
+        progress = elapsedTime / 5f;
 
         if (progress >= 1) {
             progress = 1;
