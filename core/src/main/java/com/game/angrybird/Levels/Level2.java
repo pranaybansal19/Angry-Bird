@@ -58,13 +58,16 @@ public class Level2 implements Level, Screen {
     private Array<Bird> birds = new Array<>();
     private Array<Body> birdsBody = new Array<>();
 
-    private Material wood, glass;
+    private Material wood, glass ,stone;
     private Array<Body> woodHorizontalPlank = new Array<>();
     private Array<Body> woodVerticalPlank = new Array<>();
     private Array<Body> woodBox = new Array<>();
     private Array<Body> glassHorizontalPlank = new Array<>();
     private Array<Body> glassVerticalPlank = new Array<>();
     private Array<Body> glassBox = new Array<>();
+    private Array<Body> stoneHorizontalPlank = new Array<>();
+    private Array<Body> stoneVerticalPlank = new Array<>();
+    private Array<Body> stoneBox = new Array<>();
 
     private Pig1 pig1;
     private Array<Body> pig1List = new Array<>();
@@ -76,7 +79,8 @@ public class Level2 implements Level, Screen {
     private Array<Body> pig3List = new Array<>();
 
     int birds_left = 4;
-    private boolean birdsLeftCheckStarted = false;
+    private boolean birdsLeft = false;
+    private boolean levelCompleted = false;
 
 
     private Vector2 initialTouch;
@@ -133,6 +137,7 @@ public class Level2 implements Level, Screen {
 
         wood = new Wood(world, batch);
         glass = new Glass(world, batch);
+        stone = new Stone(world, batch);
 
         slingShot = new SlingShot(viewport, stage);
 
@@ -371,37 +376,37 @@ public class Level2 implements Level, Screen {
 
     public void createTower() {
 
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 33, 4f, 3.5f, 4.5f));
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 43, 4f, 3.5f, 4.5f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 33f, 8f, 9f, 2f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 43f, 8f, 9f, 2f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 10f, 9f, 2f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 15.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 15.5f, 1.5f, 11f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 29.5f, 13.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 46.5f, 13.5f, 1.5f, 11f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 22f, 9f, 2f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 35f, 9f, 2f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 29f, 20f, 7f, 2f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
-//
-//
-//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12f, 2f));
-//        pig2List.add(pig2.create(dynamicBodyDef, 38f, 25f, 2f));
-//
-//        pig1List.add(pig1.create(dynamicBodyDef, 33f, 10f, 1.5f));
-//
-//        pig1List.add(pig1.create(dynamicBodyDef, 43f, 10f, 1.5f));
+        woodBox.add(wood.createQuad(dynamicBodyDef, 33, 4f, 3.5f, 4.5f));
+        woodBox.add(wood.createQuad(dynamicBodyDef, 43, 4f, 3.5f, 4.5f));
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 33f, 8f, 9f, 2f));
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 43f, 8f, 9f, 2f));
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 10f, 9f, 2f));
+
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 15.5f, 1.5f, 11f));
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 15.5f, 1.5f, 11f));
+
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 29.5f, 13.5f, 1.5f, 11f));
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 46.5f, 13.5f, 1.5f, 11f));
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 22f, 9f, 2f));
+
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 35f, 9f, 2f));
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 29f, 20f, 7f, 2f));
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
+
+
+        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12f, 2f));
+        pig2List.add(pig2.create(dynamicBodyDef, 38f, 25f, 2f));
+
+        pig1List.add(pig1.create(dynamicBodyDef, 33f, 10f, 1.5f));
+
+        pig1List.add(pig1.create(dynamicBodyDef, 43f, 10f, 1.5f));
     }
 
     public void createBirds() {
@@ -526,16 +531,16 @@ public class Level2 implements Level, Screen {
         viewport.apply();
         batch.begin();
 
-        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-
+        if (!levelCompleted && pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+            levelCompleted = true;
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
                     game.setScreen(new LevelCompleteScreen(game.getLevel1()));
                 }
             }, 3);
-        } else if (birds_left == 0 && !birdsLeftCheckStarted) {
-            birdsLeftCheckStarted = true;
+        } else if (birds_left == 0 && !birdsLeft) {
+            birdsLeft = true;
 
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -545,13 +550,12 @@ public class Level2 implements Level, Screen {
                             game.setScreen(new LevelCompleteScreen(game.getLevel1()));
                         } else {
                             game.setScreen(new LevelFailScreen(game.getLevel1()));
-
                         }
                     }
                 }
-            }, 3); // Delay in seconds
+            }, 5);
         } else if (birds_left > 0) {
-            birdsLeftCheckStarted = false; // Reset if the condition is no longer true
+            birdsLeft = false;
         }
 
         drawLevel();
@@ -576,7 +580,7 @@ public class Level2 implements Level, Screen {
 
             System.out.println(initialTouch.x + " " + initialTouch.y);
             Vector2 launchVector = initialTouch.cpy().sub(new Vector2(target.x, target.y)).scl(10);
-            shapeRenderer.end(); // End the current shape batch before drawing the trajectory
+            shapeRenderer.end();
 
             if (initialTouch.dst(new Vector2(target.x, target.y)) > 1f) {
                 drawTrajectory(initialTouch, launchVector);
@@ -585,7 +589,7 @@ public class Level2 implements Level, Screen {
             shapeRenderer.end();
         }
 
-        collisionListener.update(woodBox, woodHorizontalPlank, woodVerticalPlank, glassBox, glassHorizontalPlank, glassVerticalPlank, birdsBody, pig1List, pig2List, pig3List);
+        collisionListener.update(woodBox, woodHorizontalPlank, woodVerticalPlank, glassBox, glassHorizontalPlank, glassVerticalPlank,stoneBox,stoneVerticalPlank,stoneHorizontalPlank, birdsBody, pig1List, pig2List, pig3List);
     }
 
 
