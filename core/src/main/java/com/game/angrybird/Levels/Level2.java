@@ -35,7 +35,7 @@ import com.game.angrybird.Pigs.Pig3;
 
 import java.util.Objects;
 
-public class Level1 implements Level, Screen {
+public class Level2 implements Level, Screen {
 
     private AngryBird game;
     private PauseScreen pauseScreen;
@@ -101,7 +101,7 @@ public class Level1 implements Level, Screen {
     private CollisionListener collisionListener;
 
 
-    public Level1(AngryBird game) {
+    public Level2(AngryBird game) {
         this.game = game;
         pauseScreen = new PauseScreen(this);
 
@@ -371,37 +371,37 @@ public class Level1 implements Level, Screen {
 
     public void createTower() {
 
-        woodBox.add(wood.createQuad(dynamicBodyDef, 33, 4f, 3.5f, 4.5f));
-        woodBox.add(wood.createQuad(dynamicBodyDef, 43, 4f, 3.5f, 4.5f));
-
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 33f, 8f, 9f, 2f));
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 43f, 8f, 9f, 2f));
-
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 10f, 9f, 2f));
-
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 15.5f, 1.5f, 11f));
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 15.5f, 1.5f, 11f));
-
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 29.5f, 13.5f, 1.5f, 11f));
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 46.5f, 13.5f, 1.5f, 11f));
-
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 22f, 9f, 2f));
-
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
-
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 35f, 9f, 2f));
-
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 29f, 20f, 7f, 2f));
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
-
-
-        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12f, 2f));
-        pig2List.add(pig2.create(dynamicBodyDef, 38f, 25f, 2f));
-
-        pig1List.add(pig1.create(dynamicBodyDef, 33f, 10f, 1.5f));
-
-        pig1List.add(pig1.create(dynamicBodyDef, 43f, 10f, 1.5f));
+//        woodBox.add(wood.createQuad(dynamicBodyDef, 33, 4f, 3.5f, 4.5f));
+//        woodBox.add(wood.createQuad(dynamicBodyDef, 43, 4f, 3.5f, 4.5f));
+//
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 33f, 8f, 9f, 2f));
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 43f, 8f, 9f, 2f));
+//
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 10f, 9f, 2f));
+//
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 15.5f, 1.5f, 11f));
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 15.5f, 1.5f, 11f));
+//
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 29.5f, 13.5f, 1.5f, 11f));
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 46.5f, 13.5f, 1.5f, 11f));
+//
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 22f, 9f, 2f));
+//
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
+//
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 35f, 9f, 2f));
+//
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 29f, 20f, 7f, 2f));
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
+//
+//
+//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12f, 2f));
+//        pig2List.add(pig2.create(dynamicBodyDef, 38f, 25f, 2f));
+//
+//        pig1List.add(pig1.create(dynamicBodyDef, 33f, 10f, 1.5f));
+//
+//        pig1List.add(pig1.create(dynamicBodyDef, 43f, 10f, 1.5f));
     }
 
     public void createBirds() {
