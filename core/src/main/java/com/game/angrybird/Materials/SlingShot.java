@@ -1,7 +1,15 @@
 package com.game.angrybird.Materials;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -10,32 +18,43 @@ import com.game.angrybird.Birds.Bird;
 public class SlingShot {
 
     private Image slingShot;
+
     private Viewport viewport;
     private Stage stage;
-    private Bird loadedBird;
+
+    private Vector2 slingshotPosition;
 
     public SlingShot(Viewport viewport, Stage stage) {
         this.viewport = viewport;
         this.stage = stage;
     }
 
-    public void launch(){}
 
-    public void aim(){}
+    public void create(float x, float y, float width, float height) {
 
-    public void create(float x,float y,float width,float height) {
-
+        slingshotPosition = new Vector2(x, y);
         slingShot = new Image(new Texture(Gdx.files.internal("Slingshot/Slingshot.png")));
         slingShot.setSize(width, height);
-        slingShot.setPosition(x,y);
+        slingShot.setPosition(x, y);
 
+    }
+
+    public void launchProjectile(Vector2 releasePoint, Vector2 initialTouch, Body projectileBody) {
+        Vector2 launchVector = initialTouch.cpy().sub(releasePoint);
+        System.out.println(launchVector.x + " " + launchVector.y);
+        projectileBody.applyLinearImpulse(launchVector.scl(33), projectileBody.getWorldCenter(), true);
+    }
+
+    private boolean isInsideSlingshotTop(Vector2 point) {
+        return true;
     }
 
     public void draw() {
         stage.addActor(slingShot);
+
     }
 
-    public void destroy(){
+    public void destroy() {
         slingShot.remove();
     }
 

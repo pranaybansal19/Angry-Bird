@@ -25,6 +25,7 @@ public class Ground {
         fixtureDef.restitution = 0.1f;
 
         groundBody.createFixture(fixtureDef);
+        groundBody.setUserData("ground");
 
         groundBox.dispose();
 
