@@ -52,15 +52,18 @@ public class CollisionListener implements ContactListener {
         }
     }
 
-    public void update(Array<Body> woodBox, Array<Body> woodHorizontalPlank, Array<Body> woodVerticalPlank, Array<Body> glassBox, Array<Body> glassHorizontalPlank, Array<Body> glassVerticalPlank, Array<Body> birdsBody, Array<Body> pigList1, Array<Body> pigList2,Array<Body> pigList3) {
+    public void update(Array<Body> woodBox, Array<Body> woodHorizontalPlank, Array<Body> woodVerticalPlank, Array<Body> glassBox, Array<Body> glassHorizontalPlank, Array<Body> glassVerticalPlank,Array<Body> stoneBox,Array<Body> stoneVerticalPlank,Array<Body> stoneHorizontalPlank, Array<Body> birdsBody, Array<Body> pigList1, Array<Body> pigList2,Array<Body> pigList3) {
         for (Body body : bodiesToDestroy) {
             woodHorizontalPlank.removeValue(body, true);
             woodVerticalPlank.removeValue(body, true);
             glassHorizontalPlank.removeValue(body, true);
             glassVerticalPlank.removeValue(body, true);
+            stoneHorizontalPlank.removeValue(body, true);
+            stoneVerticalPlank.removeValue(body, true);
             birdsBody.removeValue(body, true);
             woodBox.removeValue(body, true);
             glassBox.removeValue(body, true);
+            stoneBox.removeValue(body, true);
             pigList1.removeValue(body, true);
             pigList2.removeValue(body, true);
             pigList3.removeValue(body, true);

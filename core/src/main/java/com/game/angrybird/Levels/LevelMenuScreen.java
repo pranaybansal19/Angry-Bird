@@ -89,6 +89,17 @@ public class LevelMenuScreen implements Screen {
             }
         });
 
+        level3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Level 3 Clicked.");
+                game.setLevel3(new Level3(game));
+                game.setScreen((Screen) game.getLevel3());
+            }
+        });
+
+
+
         Handler.hoverEffect(back);
         Handler.hoverEffect(level1);
         Handler.hoverEffect(level2);
