@@ -12,6 +12,11 @@ public class AngryBird extends Game {
     private LevelMenuScreen levelMenuScreen;
     private Level level1;
     private Level level2;
+    private Level level3;
+
+    private boolean level1Locked = false;
+    private boolean level2Locked = true;
+    private boolean level3Locked = true;
 
     public Level getLevel1() {
         return level1;
@@ -19,6 +24,34 @@ public class AngryBird extends Game {
 
     public Level getLevel2() {
         return level2;
+    }
+
+    public Level getLevel3() {
+        return level3;
+    }
+
+    public void setLevel1Locked(boolean level1Locked) {
+        this.level1Locked = level1Locked;
+    }
+
+    public void setLevel2Locked(boolean level2Locked) {
+        this.level2Locked = level2Locked;
+    }
+
+    public void setLevel3Locked(boolean level3Locked) {
+        this.level3Locked = level3Locked;
+    }
+
+    public boolean isLevel1Locked() {
+        return level1Locked;
+    }
+
+    public boolean isLevel2Locked() {
+        return level2Locked;
+    }
+
+    public boolean isLevel3Locked() {
+        return level3Locked;
     }
 
     public LevelMenuScreen getLevelMenuScreen() {
@@ -37,6 +70,10 @@ public class AngryBird extends Game {
         this.level2 = level2;
     }
 
+    public void setLevel3(Level level3) {
+        this.level3 = level3;
+    }
+
     public void setLevelMenuScreen(LevelMenuScreen levelMenuScreen) {
         this.levelMenuScreen = levelMenuScreen;
     }
@@ -49,9 +86,8 @@ public class AngryBird extends Game {
     public void create() {
         mainMenuScreen = new MainMenuScreen(this);
         levelMenuScreen = new LevelMenuScreen(this);
-        level1 = new Level1(this);
-//        this.setScreen(new LoadingScreen(this, mainMenuScreen));
-        this.setScreen((Screen) level1);
+
+        this.setScreen(new LoadingScreen(this, mainMenuScreen));
     }
 
     @Override

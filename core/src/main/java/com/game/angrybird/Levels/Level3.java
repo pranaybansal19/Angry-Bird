@@ -100,6 +100,8 @@ public class Level3 implements Level, Screen {
     BodyDef staticBodyDef = new BodyDef();
 
     private boolean isDragging = false;
+    private boolean birdsLeft = false;
+    private boolean levelCompleted = false;
 
     private CollisionListener collisionListener;
 
@@ -560,33 +562,34 @@ public class Level3 implements Level, Screen {
         viewport.apply();
         batch.begin();
 
-//        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-//
-//            Timer.schedule(new Timer.Task() {
-//                @Override
-//                public void run() {
-//                    game.setScreen(new LevelCompleteScreen(game.getLevel1()));
-//                }
-//            }, 3);
-//        } else if (birds_left == 0 && !birdsLeftCheckStarted) {
-//            birdsLeftCheckStarted = true;
-//
-//            Timer.schedule(new Timer.Task() {
-//                @Override
-//                public void run() {
-//                    if (birds_left == 0) {
-//                        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-//                            game.setScreen(new LevelCompleteScreen(game.getLevel1()));
-//                        } else {
-//                            game.setScreen(new LevelFailScreen(game.getLevel1()));
-//
-//                        }
-//                    }
-//                }
-//            }, 3); // Delay in seconds
-//        } else if (birds_left > 0) {
-//            birdsLeftCheckStarted = false; // Reset if the condition is no longer true
-//        }
+        if (!levelCompleted && pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+            levelCompleted = true;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    game.setLevel2Locked(false);
+                    game.setScreen(new LevelCompleteScreen(game.getLevel1(),game));
+                }
+            }, 3);
+        } else if (birds_left == 0 && !birdsLeft) {
+            birdsLeft = true;
+
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (birds_left == 0) {
+                        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+                            game.setLevel2Locked(false);
+                            game.setScreen(new LevelCompleteScreen(game.getLevel1(),game));
+                        } else {
+                            game.setScreen(new LevelFailScreen(game.getLevel1()));
+                        }
+                    }
+                }
+            }, 5);
+        } else if (birds_left > 0) {
+            birdsLeft = false;
+        }
 
         drawLevel();
 

@@ -14,9 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.game.angrybird.AngryBird;
 import com.game.angrybird.Handler;
 import com.game.angrybird.Levels.Level;
 import com.game.angrybird.Levels.Level1;
+import com.game.angrybird.Levels.Level2;
+import com.game.angrybird.Levels.Level3;
 
 public class LevelCompleteScreen implements Screen {
 
@@ -31,10 +34,13 @@ public class LevelCompleteScreen implements Screen {
     private Stage stage;
     private SpriteBatch batch;
 
+    AngryBird game;
+
     // Constructor
-    public LevelCompleteScreen(Level level) {
+    public LevelCompleteScreen(Level level, AngryBird game) {
 
         this.level = level;
+        this.game = game;
 
         // initialization
         camera = new OrthographicCamera();
@@ -42,6 +48,8 @@ public class LevelCompleteScreen implements Screen {
         batch = new SpriteBatch();
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
+
+        System.out.println("Level Complete Constructor Called");
 
         createScreen();
     }
@@ -67,13 +75,49 @@ public class LevelCompleteScreen implements Screen {
         star3.setSize(viewport.getWorldWidth() / 5f, viewport.getWorldHeight() / 8.9f);
         star3.setPosition(viewport.getWorldWidth() / 2 - star3.getWidth() / 2, viewport.getWorldHeight() / 2 - star3.getHeight() / 2 + 45);
 
+        nextLevel.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Next Level Clicked.");
+
+                if (level instanceof Level1) {
+                    System.out.println("Level 1 Completed.");
+                    game.setLevel2(new Level2(game));
+                    game.setScreen((Screen) game.getLevel2());
+                }
+                if (level instanceof Level2) {
+                    System.out.println("Level 2 Completed.");
+                    game.setLevel3(new Level3(game));
+                    game.setScreen((Screen) game.getLevel3());
+                }
+                if (level instanceof Level3) {
+                    System.out.println("Level 3 Completed.");
+                    game.setScreen((Screen) game.getLevelMenuScreen());
+                }
+
+            }
+        });
+
         restart.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Restart Clicked.");
-                level.getGame().setLevel1(new Level1(level.getGame()));
-                level.getGame().setScreen((Screen) level.getGame().getLevel1());
 
+                if (level instanceof Level1) {
+                    System.out.println("Level 1 Restarted.");
+                    game.setLevel1(new Level1(game));
+                    game.setScreen((Screen) game.getLevel1());
+                }
+                if (level instanceof Level2) {
+                    System.out.println("Level 2 Restarted.");
+                    game.setLevel2(new Level2(game));
+                    game.setScreen((Screen) game.getLevel2());
+                }
+                if (level instanceof Level3) {
+                    System.out.println("Level 3 Restarted.");
+                    game.setLevel3(new Level3(game));
+                    game.setScreen((Screen) game.getLevel3());
+                }
             }
         });
 
@@ -81,7 +125,7 @@ public class LevelCompleteScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Menu Clicked.");
-                level.getGame().setScreen((Screen) level.getGame().getLevelMenuScreen());
+                game.setScreen((Screen) game.getLevelMenuScreen());
             }
         });
 
@@ -131,6 +175,7 @@ public class LevelCompleteScreen implements Screen {
 
     @Override
     public void show() {
+        System.out.println("Level Complete show called");
         Gdx.input.setInputProcessor(stage);
     }
 

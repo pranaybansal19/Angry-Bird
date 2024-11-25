@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.game.angrybird.Handler;
 import com.game.angrybird.Levels.Level1;
+import com.game.angrybird.Levels.Level2;
+import com.game.angrybird.Levels.Level3;
 
 public class PauseMenu {
 
@@ -62,8 +64,19 @@ public class PauseMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Restart Clicked.");
-                pauseScreen.getLevel().getGame().setLevel1(new Level1(pauseScreen.getLevel().getGame()));
-                pauseScreen.getLevel().getGame().setScreen((Screen) pauseScreen.getLevel().getGame().getLevel1());
+
+                if (pauseScreen.getLevel() instanceof Level1) {
+                    pauseScreen.getLevel().getGame().setLevel1(new Level1(pauseScreen.getLevel().getGame()));
+                    pauseScreen.getLevel().getGame().setScreen((Screen) pauseScreen.getLevel().getGame().getLevel1());
+                }
+                if (pauseScreen.getLevel() instanceof Level2) {
+                    pauseScreen.getLevel().getGame().setLevel2(new Level2(pauseScreen.getLevel().getGame()));
+                    pauseScreen.getLevel().getGame().setScreen((Screen) pauseScreen.getLevel().getGame().getLevel2());
+                }
+                if (pauseScreen.getLevel() instanceof Level3) {
+                    pauseScreen.getLevel().getGame().setLevel3(new Level3(pauseScreen.getLevel().getGame()));
+                    pauseScreen.getLevel().getGame().setScreen((Screen) pauseScreen.getLevel().getGame().getLevel3());
+                }
             }
         });
 

@@ -353,7 +353,6 @@ public class Level1 implements Level, Screen {
         Vector2 vel = new Vector2(velocity);
         float timeStep = 1 / 60f;
 
-        shapeRenderer.setColor(0.6f, 0.3f, 0.1f, 1f);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int i = 0; i < 6; i++) {
             vel.add(0, -9.8f * timeStep);
@@ -536,7 +535,8 @@ public class Level1 implements Level, Screen {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    game.setScreen(new LevelCompleteScreen(game.getLevel1()));
+                    game.setLevel2Locked(false);
+                    game.setScreen(new LevelCompleteScreen(game.getLevel1(),game));
                 }
             }, 3);
         } else if (birds_left == 0 && !birdsLeft) {
@@ -547,7 +547,8 @@ public class Level1 implements Level, Screen {
                 public void run() {
                     if (birds_left == 0) {
                         if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-                            game.setScreen(new LevelCompleteScreen(game.getLevel1()));
+                            game.setLevel2Locked(false);
+                            game.setScreen(new LevelCompleteScreen(game.getLevel1(),game));
                         } else {
                             game.setScreen(new LevelFailScreen(game.getLevel1()));
                         }
