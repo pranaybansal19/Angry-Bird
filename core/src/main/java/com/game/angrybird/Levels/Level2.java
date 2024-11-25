@@ -377,37 +377,48 @@ public class Level2 implements Level, Screen {
 
     public void createTower() {
 
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 33, 4f, 3.5f, 4.5f));
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 43, 4f, 3.5f, 4.5f));
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f));
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 36f, 7f, 1f, 8f));
+
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 34f, 11.5f, 5.5f, 1.5f));
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 36.3f, 13.5f, 5f, 1.5f));
+
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 36f, 16f, 1f, 8f));
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 36f, 22f, 6f, 1.5f));
+
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 42.5f, 2f, 6f, 1.5f));
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 40f, 7f, 1f, 7f));
+        woodBox.add(wood.createQuad(dynamicBodyDef, 40, 13f, 3f, 3.5f));
+
+        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 7f, 1f, 8f));
+        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 12f, 5f, 1.5f));
+
+        pig1List.add(pig1.create(dynamicBodyDef, 32.5f, 14f, 1f));
+        pig1List.add(pig1.create(dynamicBodyDef, 37.5f, 15f, 1f));
+
+
+        pig2List.add(pig2.create(dynamicBodyDef, 36f, 28f, 1.5f));
+        pig2List.add(pig2.create(dynamicBodyDef, 44.5f, 14f, 1.5f));
+
+        woodBox.add(wood.createQuad(dynamicBodyDef, 36f, 24f, 3f, 3.5f));
 //
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 33f, 8f, 9f, 2f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 43f, 8f, 9f, 2f));
 //
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 10f, 9f, 2f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 15.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 15.5f, 1.5f, 11f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 29.5f, 13.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 46.5f, 13.5f, 1.5f, 11f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 22f, 9f, 2f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 35f, 9f, 2f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 29f, 20f, 7f, 2f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
+//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 6f, 1f));
+//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12.5f, 1f));
+//        pig1List.add(pig1.create(dynamicBodyDef, 41.5f, 29.5f, 1f));
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 38.5f, 27.5f, 1f, 8f));
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38.5f, 32f, 6f, 1.5f));
 //
 //
-//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12f, 2f));
-//        pig2List.add(pig2.create(dynamicBodyDef, 38f, 25f, 2f));
+//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 27.5f, 1f, 8f));
+//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 32f, 6f, 1.5f));
 //
-//        pig1List.add(pig1.create(dynamicBodyDef, 33f, 10f, 1.5f));
-//
-//        pig1List.add(pig1.create(dynamicBodyDef, 43f, 10f, 1.5f));
+//        woodBox.add(wood.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f));
+//        woodBox.add(wood.createQuad(dynamicBodyDef, 38.5f, 33f, 3f, 3.5f));
+//        woodBox.add(wood.createQuad(dynamicBodyDef, 45, 33f, 3f, 3.5f));
+
+
     }
 
     public void createBirds() {
@@ -425,8 +436,8 @@ public class Level2 implements Level, Screen {
     @Override
     public void createLevel() {
 
-        background = new Texture(Gdx.files.internal("Level 1/Background.png"));
-        pause = new Image(new Texture(Gdx.files.internal("Level 1/PauseBtn.png")));
+        background = new Texture(Gdx.files.internal("Level 2/Background.png"));
+        pause = new Image(new Texture(Gdx.files.internal("Level 2/PauseBtn.png")));
 
         slingShot.create(9, 2.9f, 7, 9);
 
@@ -489,13 +500,13 @@ public class Level2 implements Level, Screen {
         }
 
         for (Body body : pig1List) {
-            pig1.draw(body, 3f, 3f);
+            pig1.draw(body, 2.5f, 3f);
         }
         for (Body body : pig2List) {
-            pig2.draw(body, 4f, 4f);
+            pig2.draw(body, 3f, 3f);
         }
         for (Body body : pig3List) {
-            pig3.draw(body, 4f, 4f);
+            pig3.draw(body, 3f, 3f);
         }
 
         for (Body body : glassHorizontalPlank) {
@@ -531,40 +542,40 @@ public class Level2 implements Level, Screen {
 
         viewport.apply();
         batch.begin();
-
-        if (!levelCompleted && pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-            levelCompleted = true;
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    game.setLevel3Locked(false);
-                    game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
-                }
-            }, 3);
-        } else if (birds_left == 0 && !birdsLeft) {
-            birdsLeft = true;
-
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    if (birds_left == 0) {
-                        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-                            game.setLevel3Locked(false);
-                            game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
-                        } else {
-                            game.setScreen(new LevelFailScreen(game.getLevel1()));
-                        }
-                    }
-                }
-            }, 5);
-        } else if (birds_left > 0) {
-            birdsLeft = false;
-        }
-
+//
+//        if (!levelCompleted && pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+//            levelCompleted = true;
+//            Timer.schedule(new Timer.Task() {
+//                @Override
+//                public void run() {
+//                    game.setLevel3Locked(false);
+//                    game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
+//                }
+//            }, 3);
+//        } else if (birds_left == 0 && !birdsLeft) {
+//            birdsLeft = true;
+//
+//            Timer.schedule(new Timer.Task() {
+//                @Override
+//                public void run() {
+//                    if (birds_left == 0) {
+//                        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+//                            game.setLevel3Locked(false);
+//                            game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
+//                        } else {
+//                            game.setScreen(new LevelFailScreen(game.getLevel1()));
+//                        }
+//                    }
+//                }
+//            }, 5);
+//        } else if (birds_left > 0) {
+//            birdsLeft = false;
+//        }
+//
         drawLevel();
 
         batch.end();
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
 
         stage.act();
         stage.draw();
