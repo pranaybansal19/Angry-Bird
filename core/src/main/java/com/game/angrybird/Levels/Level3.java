@@ -108,7 +108,7 @@ public class Level3 implements Level, Screen {
         this.game = game;
         pauseScreen = new PauseScreen(this);
 
-        world = new World(new Vector2(0f, 0f), true);
+        world = new World(new Vector2(0f, -9.8f), true);
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 
@@ -376,21 +376,45 @@ public class Level3 implements Level, Screen {
 
     public void createTower() {
 
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 33, 4f, 3.5f, 4.5f));
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 43, 4f, 3.5f, 4.5f));
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f));
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 36f, 7f, 1f, 4.5f));
+
+
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 33.8f, 11.5f, 4.5f, 1.5f));
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 11.5f, 5f, 1.5f));
+
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 40.5f, 8.5f, 1f, 4.5f));
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 36f, 16.5f, 1f, 8f));
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 40.5f, 16.5f, 1f, 8f));
+
+
+        stoneBox.add(stone.createQuad(dynamicBodyDef, 37, 4f, 3f, 3.5f));
+        stoneBox.add(stone.createQuad(dynamicBodyDef, 40, 4f, 3f, 3.5f));
+
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 22f, 6f, 1.5f));
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 45f, 22f, 6f, 1.5f));
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 42f, 24f, 5f, 1.5f));
+
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 27.5f, 1f, 8f));
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 32f, 6f, 1.5f));
+
+
+        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 45f, 27.5f, 1f, 8f));
+        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 45f, 32f, 6f, 1.5f));
+
+        stoneBox.add(stone.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f));
+        stoneBox.add(stone.createQuad(dynamicBodyDef, 38.5f, 33f, 3f, 3.5f));
+        stoneBox.add(stone.createQuad(dynamicBodyDef, 45, 33f, 3f, 3.5f));
+
+        pig1List.add(pig1.create(dynamicBodyDef, 33.5f, 5f, 1f));
+        pig3List.add(pig3.create(dynamicBodyDef, 38f, 6f, 1f));
+        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12.5f, 1f));
+        pig1List.add(pig1.create(dynamicBodyDef, 41.5f, 29.5f, 1f));
+
+        pig2List.add(pig2.create(dynamicBodyDef, 38.5f, 34f, 1f));
+        pig2List.add(pig2.create(dynamicBodyDef, 44.5f, 34f, 1f));
+
 //
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 33f, 4f, 5f, 2f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 4f, 5f, 2f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 10f, 9f, 2f));
-//
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 34f, 5.5f, 1f, 5f));
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 36f, 5.5f, 1f, 5f));
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 29.5f, 13.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 46.5f, 13.5f, 1.5f, 11f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 22f, 9f, 2f));
 //
 //        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
 //        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
@@ -401,12 +425,6 @@ public class Level3 implements Level, Screen {
 //        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
 //
 //
-//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12f, 2f));
-//        pig2List.add(pig2.create(dynamicBodyDef, 38f, 25f, 2f));
-//
-//        pig1List.add(pig1.create(dynamicBodyDef, 33f, 10f, 1.5f));
-//
-//        pig1List.add(pig1.create(dynamicBodyDef, 43f, 10f, 1.5f));
     }
 
     public void createBirds() {
@@ -489,13 +507,13 @@ public class Level3 implements Level, Screen {
         }
 
         for (Body body : pig1List) {
-            pig1.draw(body, 3f, 3f);
+            pig1.draw(body, 2.5f, 2.5f);
         }
         for (Body body : pig2List) {
-            pig2.draw(body, 4f, 4f);
+            pig2.draw(body, 2.5f, 2.5f);
         }
         for (Body body : pig3List) {
-            pig3.draw(body, 4f, 4f);
+            pig3.draw(body, 2.5f, 2.5f);
         }
 
         for (Body body : glassHorizontalPlank) {
