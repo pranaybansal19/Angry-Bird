@@ -101,21 +101,19 @@ public class Glass implements Material {
     }
 
     @Override
-    public boolean isClicked(Body body, float mouseX, float mouseY) {
-        Vector2 position = body.getPosition();
-        Vector2 size = (Vector2) body.getUserData();
-
-        float halfWidth = size.x / 2;
-        float halfHeight = size.y / 2;
-
-        return mouseX >= position.x - halfWidth && mouseX <= position.x + halfWidth &&
-            mouseY >= position.y - halfHeight && mouseY <= position.y + halfHeight;
-    }
-
-    @Override
     public void destroy() {
         world.dispose();
         batch.dispose();
+    }
+
+    @Override
+    public float getHealth() {
+        return 0;
+    }
+
+    @Override
+    public void setHealth(float v) {
+
     }
 
 }

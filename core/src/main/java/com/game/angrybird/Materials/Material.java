@@ -12,7 +12,9 @@ public interface Material {
 
     void drawBox(Body body);
 
-    boolean isClicked(Body body, float mouseX, float mouseY);
-
     void destroy();
+
+    float getHealth();
+
+    void setHealth(float v);
 }

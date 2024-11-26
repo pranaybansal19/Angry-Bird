@@ -1,5 +1,6 @@
 package com.game.angrybird;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -21,6 +22,11 @@ public class Handler {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 image.setScale(1f);
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.audio.newMusic(Gdx.files.internal("Audio/button_click.mp3")).play();
             }
         });
 

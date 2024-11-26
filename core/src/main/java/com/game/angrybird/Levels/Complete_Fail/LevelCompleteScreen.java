@@ -16,10 +16,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.angrybird.AngryBird;
 import com.game.angrybird.Handler;
-import com.game.angrybird.Levels.Level;
-import com.game.angrybird.Levels.Level1;
-import com.game.angrybird.Levels.Level2;
-import com.game.angrybird.Levels.Level3;
+import com.game.angrybird.Levels.*;
 
 public class LevelCompleteScreen implements Screen {
 
@@ -38,6 +35,14 @@ public class LevelCompleteScreen implements Screen {
 
     // Constructor
     public LevelCompleteScreen(Level level, AngryBird game) {
+
+        level.getGame().levelMusic.stop();
+
+        if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+            level.getGame().backgroundMusic.setLooping(true);
+            level.getGame().backgroundMusic.setVolume(0.3f);
+            level.getGame().backgroundMusic.play();
+        }
 
         this.level = level;
         this.game = game;
@@ -92,7 +97,15 @@ public class LevelCompleteScreen implements Screen {
                 }
                 if (level instanceof Level3) {
                     System.out.println("Level 3 Completed.");
+                    game.setLevelMenuScreen(new LevelMenuScreen(game));
                     game.setScreen((Screen) game.getLevelMenuScreen());
+                }
+
+                level.getGame().backgroundMusic.stop();
+
+                if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    level.getGame().levelMusic.setLooping(true);
+                    level.getGame().levelMusic.play();
                 }
 
             }
@@ -118,6 +131,13 @@ public class LevelCompleteScreen implements Screen {
                     game.setLevel3(new Level3(game));
                     game.setScreen((Screen) game.getLevel3());
                 }
+
+                level.getGame().backgroundMusic.stop();
+
+                if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    level.getGame().levelMusic.setLooping(true);
+                    level.getGame().levelMusic.play();
+                }
             }
         });
 
@@ -125,7 +145,17 @@ public class LevelCompleteScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Menu Clicked.");
+                level.getGame().setLevelMenuScreen(new LevelMenuScreen(level.getGame()));
                 game.setScreen((Screen) game.getLevelMenuScreen());
+
+                level.getGame().backgroundMusic.stop();
+
+                if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    level.getGame().backgroundMusic.setLooping(true);
+                    level.getGame().backgroundMusic.setVolume(0.5f);
+                    level.getGame().backgroundMusic.play();
+                }
+
             }
         });
 

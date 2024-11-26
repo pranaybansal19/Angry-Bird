@@ -87,6 +87,13 @@ public class LevelMenuScreen implements Screen {
                 System.out.println("Level 1 Clicked.");
                 game.setLevel1(new Level1(game));
                 game.setScreen((Screen) game.getLevel1());
+
+                game.backgroundMusic.stop();
+
+                if (game.getMainMenuScreen().getSettings().isMusic()) {
+                    game.levelMusic.setLooping(true);
+                    game.levelMusic.play();
+                }
             }
         });
 
@@ -97,6 +104,13 @@ public class LevelMenuScreen implements Screen {
                     System.out.println("Level 2 Clicked.");
                     game.setLevel2(new Level2(game));
                     game.setScreen((Screen) game.getLevel2());
+
+                    game.backgroundMusic.stop();
+
+                    if (game.getMainMenuScreen().getSettings().isMusic()) {
+                        game.levelMusic.setLooping(true);
+                        game.levelMusic.play();
+                    }
                 }
             });
         }
@@ -108,6 +122,13 @@ public class LevelMenuScreen implements Screen {
                     System.out.println("Level 3 Clicked.");
                     game.setLevel3(new Level3(game));
                     game.setScreen((Screen) game.getLevel3());
+
+                    game.backgroundMusic.stop();
+
+                    if (game.getMainMenuScreen().getSettings().isMusic()) {
+                        game.levelMusic.setLooping(true);
+                        game.levelMusic.play();
+                    }
                 }
             });
         }

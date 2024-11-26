@@ -26,6 +26,14 @@ public class Setting {
         create();
     }
 
+    public boolean isMusic() {
+        return sound;
+    }
+
+    public boolean isSound() {
+        return music;
+    }
+
     public void create() {
 
         settingScreen = new Texture(Gdx.files.internal("Setting Screen/Background.png"));
@@ -34,19 +42,19 @@ public class Setting {
         close.setSize(mainMenuScreen.getViewport().getWorldWidth() / 16.0f, mainMenuScreen.getViewport().getWorldHeight() / 10.0f);
         close.setPosition(mainMenuScreen.getViewport().getWorldWidth() - 150, mainMenuScreen.getViewport().getWorldHeight() - 80);
 
-        musicON = new Image(new Texture(Gdx.files.internal("Setting Screen/MusicON.png")));
-        musicON.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7f, mainMenuScreen.getViewport().getWorldHeight() / 5f);
+        musicON = new Image(new Texture(Gdx.files.internal("Setting Screen/SoundON.png")));
+        musicON.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         musicON.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - musicON.getWidth() / 2 - 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - musicON.getHeight() / 2 + 60);
 
-        musicOFF = new Image(new Texture(Gdx.files.internal("Setting Screen/MusicOFF.png")));
-        musicOFF.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7f, mainMenuScreen.getViewport().getWorldHeight() / 5f);
+        musicOFF = new Image(new Texture(Gdx.files.internal("Setting Screen/SoundOFF.png")));
+        musicOFF.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         musicOFF.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - musicOFF.getWidth() / 2 - 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - musicOFF.getHeight() / 2 + 60);
 
-        soundON = new Image(new Texture(Gdx.files.internal("Setting Screen/SoundON.png")));
+        soundON = new Image(new Texture(Gdx.files.internal("Setting Screen/MusicON.png")));
         soundON.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         soundON.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - soundON.getWidth() / 2 + 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - soundON.getHeight() / 2 + 60);
 
-        soundOFF = new Image(new Texture(Gdx.files.internal("Setting Screen/SoundOFF.png")));
+        soundOFF = new Image(new Texture(Gdx.files.internal("Setting Screen/MusicOFF.png")));
         soundOFF.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         soundOFF.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - soundOFF.getWidth() / 2 + 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - soundOFF.getHeight() / 2 + 60);
 
@@ -69,7 +77,7 @@ public class Setting {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 music = !music;
-                System.out.println("Music off.");
+                System.out.println("Sound off.");
             }
         });
 
@@ -77,7 +85,7 @@ public class Setting {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 music = !music;
-                System.out.println("Music on.");
+                System.out.println("Sound on.");
             }
         });
 
@@ -85,7 +93,8 @@ public class Setting {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 sound = !sound;
-                System.out.println("Sound off.");
+                System.out.println("Music off.");
+                mainMenuScreen.getGame().backgroundMusic.pause();
             }
         });
 
@@ -93,7 +102,8 @@ public class Setting {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 sound = !sound;
-                System.out.println("Sound on.");
+                System.out.println("Music on.");
+                mainMenuScreen.getGame().backgroundMusic.play();
             }
         });
 

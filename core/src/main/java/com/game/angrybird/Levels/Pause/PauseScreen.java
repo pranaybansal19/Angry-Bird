@@ -50,6 +50,7 @@ public class PauseScreen implements Screen {
     // Constructor
     public PauseScreen(Level level) {
 
+        level.getGame().levelMusic.pause();
         this.level = level;
 
         // initialization

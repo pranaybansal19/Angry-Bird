@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -29,6 +31,7 @@ import com.game.angrybird.Levels.Complete_Fail.LevelCompleteScreen;
 import com.game.angrybird.Levels.Complete_Fail.LevelFailScreen;
 import com.game.angrybird.Levels.Pause.PauseScreen;
 import com.game.angrybird.Materials.*;
+import com.game.angrybird.Pair;
 import com.game.angrybird.Pigs.Pig1;
 import com.game.angrybird.Pigs.Pig2;
 import com.game.angrybird.Pigs.Pig3;
@@ -58,25 +61,18 @@ public class Level2 implements Level, Screen {
     private Array<Bird> birds = new Array<>();
     private Array<Body> birdsBody = new Array<>();
 
-    private Material wood, glass ,stone;
-    private Array<Body> woodHorizontalPlank = new Array<>();
-    private Array<Body> woodVerticalPlank = new Array<>();
-    private Array<Body> woodBox = new Array<>();
-    private Array<Body> glassHorizontalPlank = new Array<>();
-    private Array<Body> glassVerticalPlank = new Array<>();
-    private Array<Body> glassBox = new Array<>();
-    private Array<Body> stoneHorizontalPlank = new Array<>();
-    private Array<Body> stoneVerticalPlank = new Array<>();
-    private Array<Body> stoneBox = new Array<>();
+    private Material wood1, wood2, wood3, wood4, wood5, wood6, wood7, wood8, wood9, wood10, wood11, wood12;
+    private Array<Pair<Body, Material>> woodHorizontalPlank = new Array<>();
+    private Array<Pair<Body, Material>> woodVerticalPlank = new Array<>();
+    private Array<Pair<Body, Material>> woodBox = new Array<>();
 
-    private Pig1 pig1;
-    private Array<Body> pig1List = new Array<>();
+    private Pig1 pig1_1,pig1_2;
+    private Array<Pair<Body, Pig1>> pig1List = new Array<>();
 
-    private Pig2 pig2;
-    private Array<Body> pig2List = new Array<>();
+    private Pig2 pig2_1,pig2_2;
+    private Array<Pair<Body, Pig2>> pig2List = new Array<>();
 
-    private Pig3 pig3;
-    private Array<Body> pig3List = new Array<>();
+    private Array<Pair<Body, Pig3>> pig3List = new Array<>();
 
     int birds_left = 4;
     private boolean birdsLeft = false;
@@ -101,6 +97,11 @@ public class Level2 implements Level, Screen {
     BodyDef staticBodyDef = new BodyDef();
 
     private boolean isDragging = false;
+
+    private int score = 0;
+    private int bestScore;
+    private Label label1, label2;
+    private Label.LabelStyle labelStyle;
 
     private CollisionListener collisionListener;
 
@@ -132,26 +133,66 @@ public class Level2 implements Level, Screen {
         blueBird = new BlueBird(world, batch);
         blackBird = new BlackBird(world, batch);
 
-        pig1 = new Pig1(world, batch);
-        pig2 = new Pig2(world, batch);
-        pig3 = new Pig3(world, batch);
+        pig1_1 = new Pig1(world, batch);
+        pig1_2 = new Pig1(world, batch);
+        pig2_1 = new Pig2(world, batch);
+        pig2_2 = new Pig2(world, batch);
 
-        wood = new Wood(world, batch);
-        glass = new Glass(world, batch);
-        stone = new Stone(world, batch);
+        wood1 = new Wood(world, batch);
+        wood2 = new Wood(world, batch);
+        wood3 = new Wood(world, batch);
+        wood4 = new Wood(world, batch);
+        wood5 = new Wood(world, batch);
+        wood6 = new Wood(world, batch);
+        wood7 = new Wood(world, batch);
+        wood8 = new Wood(world, batch);
+        wood9 = new Wood(world, batch);
+        wood10 = new Wood(world, batch);
+        wood11 = new Wood(world, batch);
+        wood12 = new Wood(world, batch);
 
         slingShot = new SlingShot(viewport, stage);
 
         dynamicBodyDef.type = BodyDef.BodyType.DynamicBody;
         staticBodyDef.type = BodyDef.BodyType.StaticBody;
 
-        collisionListener = new CollisionListener(world);
+        collisionListener = new CollisionListener(world,game,this);
         world.setContactListener(collisionListener);
+
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.WHITE);
+
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
+        bestScore = game.getLevel2BestScore();
 
         createGesture();
         createLevel();
 
     }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
+    public void updateScore(int points){
+        score+=points;
+        if (score>bestScore){
+            bestScore+=points;
+        }
+
+        label1.setText("Score :  " + String.format("%05d", score));
+        label2.setText("Best Score :  " + String.format("%05d", bestScore));
+    }
+
 
     @Override
     public AngryBird getGame() {
@@ -313,6 +354,9 @@ public class Level2 implements Level, Screen {
                         }
                     } else {
                         slingShot.launchProjectile(releasePoint, initialTouch, projectileBodies.get(projectileBodies.size - 1));
+                        if (game.getMainMenuScreen().getSettings().isSound()) {
+                            game.launchBird.play();
+                        }
                         birds_left--;
                     }
 
@@ -354,7 +398,6 @@ public class Level2 implements Level, Screen {
         Vector2 vel = new Vector2(velocity);
         float timeStep = 1 / 60f;
 
-        shapeRenderer.setColor(0.6f, 0.3f, 0.1f, 1f);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int i = 0; i < 6; i++) {
             vel.add(0, -9.8f * timeStep);
@@ -377,47 +420,49 @@ public class Level2 implements Level, Screen {
 
     public void createTower() {
 
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f));
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 36f, 7f, 1f, 8f));
+        Body b1 = wood1.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f);
+        Body b2 = wood2.createQuad(dynamicBodyDef, 36f, 7f, 1f, 8f);
+        Body b3 = wood3.createQuad(dynamicBodyDef, 34f, 11.5f, 5.5f, 1.5f);
+        Body b4 = wood4.createQuad(dynamicBodyDef, 36.3f, 13.5f, 5f, 1.5f);
+        Body b5 = wood5.createQuad(dynamicBodyDef, 36f, 16f, 1f, 8f);
+        Body b6 = wood6.createQuad(dynamicBodyDef, 36f, 22f, 6f, 1.5f);
+        Body b7 = wood7.createQuad(dynamicBodyDef, 42.5f, 2f, 6f, 1.5f);
+        Body b8 = wood8.createQuad(dynamicBodyDef, 40f, 7f, 1f, 7f);
+        Body b9 = wood9.createQuad(dynamicBodyDef, 40, 13f, 3f, 3.5f);
+        Body b10 = wood10.createQuad(dynamicBodyDef, 45f, 7f, 1f, 8f);
+        Body b11 = wood11.createQuad(dynamicBodyDef, 45f, 12f, 5f, 1.5f);
+        Body b12 = wood12.createQuad(dynamicBodyDef, 36f, 24f, 3f, 3.5f);
+
+        Body b13 = pig1_1.create(dynamicBodyDef, 32.5f, 14f, 1.5f);
+        Body b14 = pig1_2.create(dynamicBodyDef, 37.5f, 15f, 1.5f);
+        Body b15 = pig2_1.create(dynamicBodyDef, 36f, 28f, 1.5f);
+        Body b16 = pig2_2.create(dynamicBodyDef, 44.5f, 14f, 1.5f);
+
+        woodVerticalPlank.add(new Pair<>(b1,wood1));
+        woodVerticalPlank.add(new Pair<>(b2,wood2));
 
 
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 34f, 11.5f, 5.5f, 1.5f));
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 36.3f, 13.5f, 5f, 1.5f));
+        woodHorizontalPlank.add(new Pair<>(b3,wood3));
+        woodHorizontalPlank.add(new Pair<>(b4,wood4));
 
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 36f, 16f, 1f, 8f));
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 36f, 22f, 6f, 1.5f));
+        woodVerticalPlank.add(new Pair<>(b5,wood5));
+        woodHorizontalPlank.add(new Pair<>(b6,wood6));
 
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 42.5f, 2f, 6f, 1.5f));
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 40f, 7f, 1f, 7f));
-        woodBox.add(wood.createQuad(dynamicBodyDef, 40, 13f, 3f, 3.5f));
+        woodHorizontalPlank.add(new Pair<>(b7,wood7));
+        woodVerticalPlank.add(new Pair<>(b8,wood8));
+        woodBox.add(new Pair<>(b9,wood9));
 
-        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 7f, 1f, 8f));
-        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 12f, 5f, 1.5f));
+        woodVerticalPlank.add(new Pair<>(b10,wood10));
+        woodHorizontalPlank.add(new Pair<>(b11,wood11));
 
-        pig1List.add(pig1.create(dynamicBodyDef, 32.5f, 14f, 1f));
-        pig1List.add(pig1.create(dynamicBodyDef, 37.5f, 15f, 1f));
+        woodBox.add(new Pair<>(b12,wood12));
+
+        pig1List.add(new Pair<>(b13,pig1_1));
+        pig1List.add(new Pair<>(b14,pig1_2));
 
 
-        pig2List.add(pig2.create(dynamicBodyDef, 36f, 28f, 1.5f));
-        pig2List.add(pig2.create(dynamicBodyDef, 44.5f, 14f, 1.5f));
-
-        woodBox.add(wood.createQuad(dynamicBodyDef, 36f, 24f, 3f, 3.5f));
-//
-//
-//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 6f, 1f));
-//        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12.5f, 1f));
-//        pig1List.add(pig1.create(dynamicBodyDef, 41.5f, 29.5f, 1f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 38.5f, 27.5f, 1f, 8f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38.5f, 32f, 6f, 1.5f));
-//
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 27.5f, 1f, 8f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 45f, 32f, 6f, 1.5f));
-//
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f));
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 38.5f, 33f, 3f, 3.5f));
-//        woodBox.add(wood.createQuad(dynamicBodyDef, 45, 33f, 3f, 3.5f));
-
+        pig2List.add(new Pair<>(b15,pig2_1));
+        pig2List.add(new Pair<>(b16,pig2_2));
 
     }
 
@@ -435,6 +480,16 @@ public class Level2 implements Level, Screen {
 
     @Override
     public void createLevel() {
+
+        label1 = new Label("Score :  " + String.format("%05d", score), labelStyle);
+        label1.setFontScale(0.12f);
+        label1.setColor(Color.WHITE);
+        label1.setPosition(38, 38);
+
+        label2 = new Label("Best Score :  " + String.format("%05d", bestScore), labelStyle);
+        label2.setFontScale(0.12f);
+        label2.setColor(Color.WHITE);
+        label2.setPosition(20, 38);
 
         background = new Texture(Gdx.files.internal("Level 2/Background.png"));
         pause = new Image(new Texture(Gdx.files.internal("Level 2/PauseBtn.png")));
@@ -467,6 +522,8 @@ public class Level2 implements Level, Screen {
 
         batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         stage.addActor(pause);
+        stage.addActor(label1);
+        stage.addActor(label2);
 
         slingShot.draw();
 
@@ -489,34 +546,24 @@ public class Level2 implements Level, Screen {
 
         }
 
-        for (Body body : woodHorizontalPlank) {
-            wood.drawPlankHorizontal(body);
+        for (int i = 0; i < woodBox.size; ++i) {
+            woodBox.get(i).getSecond().drawBox(woodBox.get(i).getFirst());
         }
-        for (Body body : woodVerticalPlank) {
-            wood.drawPlankVertical(body);
+        for (int i = 0; i < woodVerticalPlank.size; ++i) {
+            woodVerticalPlank.get(i).getSecond().drawPlankVertical(woodVerticalPlank.get(i).getFirst());
         }
-        for (Body body : woodBox) {
-            wood.drawBox(body);
-        }
-
-        for (Body body : pig1List) {
-            pig1.draw(body, 2.5f, 3f);
-        }
-        for (Body body : pig2List) {
-            pig2.draw(body, 3f, 3f);
-        }
-        for (Body body : pig3List) {
-            pig3.draw(body, 3f, 3f);
+        for (int i = 0; i < woodHorizontalPlank.size; ++i) {
+            woodHorizontalPlank.get(i).getSecond().drawPlankHorizontal(woodHorizontalPlank.get(i).getFirst());
         }
 
-        for (Body body : glassHorizontalPlank) {
-            glass.drawPlankHorizontal(body);
+        for (int i = 0; i < pig1List.size; ++i) {
+            pig1List.get(i).getSecond().draw(pig1List.get(i).getFirst(),3.5f,4f);
         }
-        for (Body body : glassVerticalPlank) {
-            glass.drawPlankVertical(body);
+        for (int i = 0; i < pig2List.size; ++i) {
+            pig2List.get(i).getSecond().draw(pig2List.get(i).getFirst(),3.5f,4f);
         }
-        for (Body body : glassBox) {
-            glass.drawBox(body);
+        for (int i = 0; i < pig3List.size; ++i) {
+            pig3List.get(i).getSecond().draw(pig3List.get(i).getFirst(),3.5f,4f);
         }
 
         for (int i = 0; i < birds.size; ++i) {
@@ -542,36 +589,46 @@ public class Level2 implements Level, Screen {
 
         viewport.apply();
         batch.begin();
-//
-//        if (!levelCompleted && pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-//            levelCompleted = true;
-//            Timer.schedule(new Timer.Task() {
-//                @Override
-//                public void run() {
-//                    game.setLevel3Locked(false);
-//                    game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
-//                }
-//            }, 3);
-//        } else if (birds_left == 0 && !birdsLeft) {
-//            birdsLeft = true;
-//
-//            Timer.schedule(new Timer.Task() {
-//                @Override
-//                public void run() {
-//                    if (birds_left == 0) {
-//                        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
-//                            game.setLevel3Locked(false);
-//                            game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
-//                        } else {
-//                            game.setScreen(new LevelFailScreen(game.getLevel1()));
-//                        }
-//                    }
-//                }
-//            }, 5);
-//        } else if (birds_left > 0) {
-//            birdsLeft = false;
-//        }
-//
+
+        if (!levelCompleted && pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+            levelCompleted = true;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+
+                    if (bestScore > game.getLevel2BestScore()) {
+                        game.setLevel2BestScore(bestScore);
+                    }
+
+                    game.setLevel3Locked(false);
+                    game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
+                }
+            }, 3);
+        } else if (birds_left == 0 && !birdsLeft) {
+            birdsLeft = true;
+
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (birds_left == 0) {
+                        if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+
+                            if (bestScore > game.getLevel2BestScore()) {
+                                game.setLevel2BestScore(bestScore);
+                            }
+
+                            game.setLevel3Locked(false);
+                            game.setScreen(new LevelCompleteScreen(game.getLevel2(),game));
+                        } else {
+                            game.setScreen(new LevelFailScreen(game.getLevel2()));
+                        }
+                    }
+                }
+            }, 5);
+        } else if (birds_left > 0) {
+            birdsLeft = false;
+        }
+
         drawLevel();
 
         batch.end();
@@ -603,7 +660,7 @@ public class Level2 implements Level, Screen {
             shapeRenderer.end();
         }
 
-        collisionListener.update(woodBox, woodHorizontalPlank, woodVerticalPlank, glassBox, glassHorizontalPlank, glassVerticalPlank,stoneBox,stoneVerticalPlank,stoneHorizontalPlank, birdsBody, pig1List, pig2List, pig3List);
+        collisionListener.update(woodBox,woodHorizontalPlank,woodVerticalPlank,new Array<>(),new Array<>(),new Array<>(),new Array<>(),new Array<>(),new Array<>(),pig1List,pig2List,pig3List);
     }
 
 

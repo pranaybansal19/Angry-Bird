@@ -1,16 +1,28 @@
 package com.game.angrybird.Levels;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.game.angrybird.AngryBird;
+import com.game.angrybird.Materials.Material;
+import com.game.angrybird.Pair;
+import com.game.angrybird.Pigs.Pig;
+import com.game.angrybird.Pigs.Pig1;
+import com.game.angrybird.Pigs.Pig2;
+import com.game.angrybird.Pigs.Pig3;
 
 import java.util.Objects;
 
 public class CollisionListener implements ContactListener {
     private World world;
+    private AngryBird game;
+    private Level level;
     private Array<Body> bodiesToDestroy = new Array<>();
 
-    public CollisionListener(World world) {
+    public CollisionListener(World world, AngryBird game, Level level) {
         this.world = world;
+        this.game = game;
+        this.level = level;
     }
 
     public void addBodies(Array<Body> bodies) {
@@ -39,37 +51,152 @@ public class CollisionListener implements ContactListener {
             maxImpulse = Math.max(maxImpulse, normalImpulse);
         }
 
-        float destructionThreshold = 70f;
-
-        if (maxImpulse > destructionThreshold) {
+        if (maxImpulse > 40) {
 
             if (!"ground".equals(bodyA.getUserData()) && !Objects.equals("projectile_bird", bodyA.getUserData()) && !bodiesToDestroy.contains(bodyA, true) && bodyA.getType() != BodyDef.BodyType.StaticBody) {
-                bodiesToDestroy.add(bodyA);
+                if (bodyA.getUserData() instanceof Material) {
+                    Material m = (Material) bodyA.getUserData();
+                    m.setHealth(m.getHealth() - maxImpulse);
+                    if (m.getHealth() <= 0) {
+                        bodiesToDestroy.add(bodyA);
+                    }
+                }
+                if (bodyA.getUserData() instanceof Pig) {
+                    Pig p = (Pig) bodyA.getUserData();
+                    p.setHealth(p.getHealth() - maxImpulse);
+                    if (p.getHealth() <= 0) {
+                        bodiesToDestroy.add(bodyA);
+                    }
+                }
             }
             if (!"ground".equals(bodyB.getUserData()) && !Objects.equals("projectile_bird", bodyB.getUserData()) && !bodiesToDestroy.contains(bodyB, true) && bodyB.getType() != BodyDef.BodyType.StaticBody) {
-                bodiesToDestroy.add(bodyB);
+                if (bodyB.getUserData() instanceof Material) {
+                    Material m = (Material) bodyB.getUserData();
+                    m.setHealth(m.getHealth() - maxImpulse);
+                    if (m.getHealth() <= 0) {
+                        bodiesToDestroy.add(bodyB);
+                    }
+                }
+                if (bodyB.getUserData() instanceof Pig) {
+                    Pig p = (Pig) bodyB.getUserData();
+                    p.setHealth(p.getHealth() - maxImpulse);
+                    if (p.getHealth() <= 0) {
+                        bodiesToDestroy.add(bodyB);
+                    }
+                }
             }
         }
     }
 
-    public void update(Array<Body> woodBox, Array<Body> woodHorizontalPlank, Array<Body> woodVerticalPlank, Array<Body> glassBox, Array<Body> glassHorizontalPlank, Array<Body> glassVerticalPlank,Array<Body> stoneBox,Array<Body> stoneVerticalPlank,Array<Body> stoneHorizontalPlank, Array<Body> birdsBody, Array<Body> pigList1, Array<Body> pigList2,Array<Body> pigList3) {
+    public boolean isCircle(Body body) {
+        for (Fixture fixture : body.getFixtureList()) {
+            if (fixture.getShape() instanceof CircleShape) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void update(Array<Pair<Body, Material>> woodBox, Array<Pair<Body, Material>> woodHorizontalPlank, Array<Pair<Body, Material>> woodVerticalPlank,
+                       Array<Pair<Body, Material>> glassBox, Array<Pair<Body, Material>> glassHorizontalPlank, Array<Pair<Body, Material>> glassVerticalPlank,
+                       Array<Pair<Body, Material>> stoneBox, Array<Pair<Body, Material>> stoneHorizontalPlank, Array<Pair<Body, Material>> stoneVerticalPlank,
+                       Array<Pair<Body, Pig1>> pig1List, Array<Pair<Body, Pig2>> pig2List, Array<Pair<Body, Pig3>> pig3List) {
         for (Body body : bodiesToDestroy) {
-            woodHorizontalPlank.removeValue(body, true);
-            woodVerticalPlank.removeValue(body, true);
-            glassHorizontalPlank.removeValue(body, true);
-            glassVerticalPlank.removeValue(body, true);
-            stoneHorizontalPlank.removeValue(body, true);
-            stoneVerticalPlank.removeValue(body, true);
-            birdsBody.removeValue(body, true);
-            woodBox.removeValue(body, true);
-            glassBox.removeValue(body, true);
-            stoneBox.removeValue(body, true);
-            pigList1.removeValue(body, true);
-            pigList2.removeValue(body, true);
-            pigList3.removeValue(body, true);
+
+            for (int i = 0; i < woodBox.size; ++i) {
+                if (woodBox.get(i).getFirst() == body) {
+                    woodBox.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < woodVerticalPlank.size; ++i) {
+                if (woodVerticalPlank.get(i).getFirst() == body) {
+                    woodVerticalPlank.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < woodHorizontalPlank.size; ++i) {
+                if (woodHorizontalPlank.get(i).getFirst() == body) {
+                    woodHorizontalPlank.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < glassBox.size; ++i) {
+                if (glassBox.get(i).getFirst() == body) {
+                    glassBox.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < glassVerticalPlank.size; ++i) {
+                if (glassVerticalPlank.get(i).getFirst() == body) {
+                    glassVerticalPlank.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < glassHorizontalPlank.size; ++i) {
+                if (glassHorizontalPlank.get(i).getFirst() == body) {
+                    glassHorizontalPlank.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < stoneBox.size; ++i) {
+                if (stoneBox.get(i).getFirst() == body) {
+                    stoneBox.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < stoneVerticalPlank.size; ++i) {
+                if (stoneVerticalPlank.get(i).getFirst() == body) {
+                    stoneVerticalPlank.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < stoneHorizontalPlank.size; ++i) {
+                if (stoneHorizontalPlank.get(i).getFirst() == body) {
+                    stoneHorizontalPlank.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < pig1List.size; ++i) {
+                if (pig1List.get(i).getFirst() == body) {
+                    pig1List.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < pig2List.size; ++i) {
+                if (pig2List.get(i).getFirst() == body) {
+                    pig2List.removeIndex(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < pig3List.size; ++i) {
+                if (pig3List.get(i).getFirst() == body) {
+                    pig3List.removeIndex(i);
+                    break;
+                }
+            }
+
+            if (!isCircle(body)) {
+                if (game.getMainMenuScreen().getSettings().isSound()) {
+                    game.destroyed.play();
+                }
+                level.updateScore(100);
+            } else {
+                level.updateScore(1000);
+            }
             world.destroyBody(body);
             body.setUserData("destroyed");
-
         }
         bodiesToDestroy.clear();
     }

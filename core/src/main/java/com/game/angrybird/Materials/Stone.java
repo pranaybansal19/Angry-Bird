@@ -13,6 +13,21 @@ public class Stone implements Material {
     private Batch batch;
 
     private TextureRegion stonePlankHorizontal, stonePlankVertical, stoneBox;
+    private TextureRegion stonePlankHorizontalDamaged, stonePlankVerticalDamaged, stoneBoxDamaged;
+
+    float health = 350;
+
+    Vector2 size;
+
+    @Override
+    public float getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        this.health = health;
+    }
 
     public Stone(World world, Batch batch) {
         this.world = world;
@@ -21,6 +36,11 @@ public class Stone implements Material {
         stonePlankHorizontal = new TextureRegion(new Texture(Gdx.files.internal("Stone/StonePlankHorizontal.png")));
         stonePlankVertical = new TextureRegion(new Texture(Gdx.files.internal("Stone/StonePlankVertical.png")));
         stoneBox = new TextureRegion(new Texture(Gdx.files.internal("Stone/StoneBox.png")));
+
+        stonePlankHorizontalDamaged = new TextureRegion(new Texture(Gdx.files.internal("Stone/StonePlankHorizontalDamaged.png")));
+        stonePlankVerticalDamaged = new TextureRegion(new Texture(Gdx.files.internal("Stone/StonePlankVerticalDamaged.png")));
+        stoneBoxDamaged = new TextureRegion(new Texture(Gdx.files.internal("Stone/StoneBoxDamaged.png")));
+
     }
 
     @Override
@@ -41,7 +61,9 @@ public class Stone implements Material {
         body.createFixture(fixtureDef);
         box.dispose();
 
-        body.setUserData(new Vector2(width, height));
+        size = new Vector2(width, height);
+
+        body.setUserData(this);
 
         return body;
     }
@@ -51,17 +73,26 @@ public class Stone implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(stonePlankHorizontal,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(stonePlankHorizontalDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(stonePlankHorizontal,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override
@@ -69,17 +100,28 @@ public class Stone implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(stonePlankVertical,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(stonePlankVerticalDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(stonePlankVertical,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
+
+
     }
 
     @Override
@@ -87,29 +129,26 @@ public class Stone implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(stoneBox,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
-    }
-
-    @Override
-    public boolean isClicked(Body body, float mouseX, float mouseY) {
-        Vector2 position = body.getPosition();
-        Vector2 size = (Vector2) body.getUserData();
-
-        float halfWidth = size.x / 2;
-        float halfHeight = size.y / 2;
-
-        return mouseX >= position.x - halfWidth && mouseX <= position.x + halfWidth &&
-            mouseY >= position.y - halfHeight && mouseY <= position.y + halfHeight;
+        if (health <= 200) {
+            batch.draw(stoneBoxDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(stoneBox,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override
@@ -117,5 +156,6 @@ public class Stone implements Material {
         world.dispose();
         batch.dispose();
     }
+
 
 }

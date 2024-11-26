@@ -1,7 +1,9 @@
 package com.game.angrybird;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.game.angrybird.Loading.LoadingScreen;
 import com.game.angrybird.MainMenu.MainMenuScreen;
 import com.game.angrybird.Levels.*;
@@ -17,6 +19,51 @@ public class AngryBird extends Game {
     private boolean level1Locked = false;
     private boolean level2Locked = true;
     private boolean level3Locked = true;
+
+    private int level1BestScore = 0;
+    private int level2BestScore = 0;
+    private int level3BestScore = 0;
+
+    private String username = "Player";
+
+    public Music backgroundMusic;
+    public Music levelMusic;
+    public Music launchBird;
+    public Music destroyed ;
+    public Music click;
+
+
+    public void setLevel1BestScore(int level1BestScore) {
+        this.level1BestScore = level1BestScore;
+    }
+
+    public void setLevel2BestScore(int level2BestScore) {
+        this.level2BestScore = level2BestScore;
+    }
+
+    public void setLevel3BestScore(int level3BestScore) {
+        this.level3BestScore = level3BestScore;
+    }
+
+    public int getLevel1BestScore() {
+        return level1BestScore;
+    }
+
+    public int getLevel2BestScore() {
+        return level2BestScore;
+    }
+
+    public int getLevel3BestScore() {
+        return level3BestScore;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 
     public Level getLevel1() {
         return level1;
@@ -84,10 +131,22 @@ public class AngryBird extends Game {
 
     @Override
     public void create() {
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Audio/backgroundMusic.ogg"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.5f);
+
+        launchBird = Gdx.audio.newMusic(Gdx.files.internal("Audio/launch.mp3"));
+        destroyed = Gdx.audio.newMusic(Gdx.files.internal("Audio/destroyed.mp3"));
+        click = Gdx.audio.newMusic(Gdx.files.internal("Audio/button_click.mp3"));
+        levelMusic = Gdx.audio.newMusic(Gdx.files.internal("Audio/levelMusic.mp3"));
+
         mainMenuScreen = new MainMenuScreen(this);
         levelMenuScreen = new LevelMenuScreen(this);
 
-        this.setScreen(new LoadingScreen(this, mainMenuScreen));
+//        this.setScreen(new LoadingScreen(this, mainMenuScreen));
+        backgroundMusic.stop();
+        this.setScreen(new Level3(this));
     }
 
     @Override

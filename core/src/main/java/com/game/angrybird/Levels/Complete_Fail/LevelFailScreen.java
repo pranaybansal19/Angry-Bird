@@ -14,8 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.game.angrybird.Levels.Level;
-import com.game.angrybird.Levels.Level1;
+import com.game.angrybird.Levels.*;
 
 public class LevelFailScreen implements Screen {
 
@@ -32,6 +31,14 @@ public class LevelFailScreen implements Screen {
 
     // Constructor
     public LevelFailScreen(Level level) {
+
+        level.getGame().levelMusic.stop();
+
+        if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+            level.getGame().backgroundMusic.setLooping(true);
+            level.getGame().backgroundMusic.setVolume(0.3f);
+            level.getGame().backgroundMusic.play();
+        }
 
         this.level = level;
 
@@ -63,8 +70,29 @@ public class LevelFailScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Retry Clicked.");
-                level.getGame().setLevel1(new Level1(level.getGame()));
-                level.getGame().setScreen((Screen) level.getGame().getLevel1());
+
+                if (level instanceof Level1) {
+                    System.out.println("Level 1 Restarted.");
+                    level.getGame().setLevel1(new Level1(level.getGame()));
+                    level.getGame().setScreen((Screen) level.getGame().getLevel1());
+                }
+                if (level instanceof Level2) {
+                    System.out.println("Level 2 Restarted.");
+                    level.getGame().setLevel2(new Level2(level.getGame()));
+                    level.getGame().setScreen((Screen) level.getGame().getLevel2());
+                }
+                if (level instanceof Level3) {
+                    System.out.println("Level 3 Restarted.");
+                    level.getGame().setLevel3(new Level3(level.getGame()));
+                    level.getGame().setScreen((Screen) level.getGame().getLevel3());
+                }
+
+                level.getGame().backgroundMusic.stop();
+
+                if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    level.getGame().levelMusic.setLooping(true);
+                    level.getGame().levelMusic.play();
+                }
             }
         });
 
@@ -72,7 +100,16 @@ public class LevelFailScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Menu Clicked.");
+                level.getGame().setLevelMenuScreen(new LevelMenuScreen(level.getGame()));
                 level.getGame().setScreen((Screen) level.getGame().getLevelMenuScreen());
+
+                level.getGame().backgroundMusic.stop();
+
+                if (level.getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    level.getGame().backgroundMusic.setLooping(true);
+                    level.getGame().backgroundMusic.setVolume(0.5f);
+                    level.getGame().backgroundMusic.play();
+                }
             }
         });
 

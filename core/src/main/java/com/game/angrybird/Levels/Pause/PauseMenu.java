@@ -10,6 +10,7 @@ import com.game.angrybird.Handler;
 import com.game.angrybird.Levels.Level1;
 import com.game.angrybird.Levels.Level2;
 import com.game.angrybird.Levels.Level3;
+import com.game.angrybird.Levels.LevelMenuScreen;
 
 public class PauseMenu {
 
@@ -22,6 +23,7 @@ public class PauseMenu {
     public PauseMenu(PauseScreen pauseScreen) {
         this.pauseScreen = pauseScreen;
         create();
+
     }
 
     public void create() {
@@ -50,6 +52,11 @@ public class PauseMenu {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Resume Clicked.");
                 pauseScreen.getLevel().getGame().setScreen((Screen) pauseScreen.getLevel());
+
+                if (pauseScreen.getLevel().getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    pauseScreen.getLevel().getGame().levelMusic.setLooping(true);
+                    pauseScreen.getLevel().getGame().levelMusic.play();
+                }
             }
         });
 
@@ -77,6 +84,13 @@ public class PauseMenu {
                     pauseScreen.getLevel().getGame().setLevel3(new Level3(pauseScreen.getLevel().getGame()));
                     pauseScreen.getLevel().getGame().setScreen((Screen) pauseScreen.getLevel().getGame().getLevel3());
                 }
+
+                pauseScreen.getLevel().getGame().levelMusic.stop();
+
+                if (pauseScreen.getLevel().getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    pauseScreen.getLevel().getGame().levelMusic.setLooping(true);
+                    pauseScreen.getLevel().getGame().levelMusic.play();
+                }
             }
         });
 
@@ -84,7 +98,15 @@ public class PauseMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Menu Clicked.");
+                pauseScreen.getLevel().getGame().setLevelMenuScreen(new LevelMenuScreen(pauseScreen.getLevel().getGame()));
                 pauseScreen.getLevel().getGame().setScreen(pauseScreen.getLevel().getGame().getLevelMenuScreen());
+
+                pauseScreen.getLevel().getGame().levelMusic.stop();
+
+                if (pauseScreen.getLevel().getGame().getMainMenuScreen().getSettings().isMusic()) {
+                    pauseScreen.getLevel().getGame().backgroundMusic.setLooping(true);
+                    pauseScreen.getLevel().getGame().backgroundMusic.play();
+                }
             }
         });
 

@@ -13,6 +13,21 @@ public class Wood implements Material {
     private Batch batch;
 
     private TextureRegion woodPlankHorizontal, woodPlankVertical, woodBox;
+    private TextureRegion woodPlankHorizontalDamaged, woodPlankVerticalDamaged, woodBoxDamaged;
+
+    float health = 350;
+
+    Vector2 size;
+
+    @Override
+    public float getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        this.health = health;
+    }
 
     public Wood(World world, Batch batch) {
         this.world = world;
@@ -21,6 +36,11 @@ public class Wood implements Material {
         woodPlankHorizontal = new TextureRegion(new Texture(Gdx.files.internal("Wood/WoodPlankHorizontal.png")));
         woodPlankVertical = new TextureRegion(new Texture(Gdx.files.internal("Wood/WoodPlankVertical.png")));
         woodBox = new TextureRegion(new Texture(Gdx.files.internal("Wood/WoodBox.png")));
+
+        woodBoxDamaged = new TextureRegion(new Texture(Gdx.files.internal("Wood/WoodBoxDamaged.png")));
+        woodPlankHorizontalDamaged = new TextureRegion(new Texture(Gdx.files.internal("Wood/WoodPlankHorizontalDamaged.png")));
+        woodPlankVerticalDamaged = new TextureRegion(new Texture(Gdx.files.internal("Wood/WoodPlankVerticalDamaged.png")));
+
     }
 
     @Override
@@ -41,7 +61,9 @@ public class Wood implements Material {
         body.createFixture(fixtureDef);
         box.dispose();
 
-        body.setUserData(new Vector2(width, height));
+        size = new Vector2(width, height);
+
+        body.setUserData(this);
 
         return body;
     }
@@ -51,17 +73,28 @@ public class Wood implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(woodPlankHorizontal,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(woodPlankHorizontalDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(woodPlankHorizontal,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
+
+
     }
 
     @Override
@@ -69,17 +102,28 @@ public class Wood implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(woodPlankVertical,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(woodPlankVerticalDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(woodPlankVertical,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
+
+
     }
 
     @Override
@@ -87,29 +131,26 @@ public class Wood implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(woodBox,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
-    }
-
-    @Override
-    public boolean isClicked(Body body, float mouseX, float mouseY) {
-        Vector2 position = body.getPosition();
-        Vector2 size = (Vector2) body.getUserData();
-
-        float halfWidth = size.x / 2;
-        float halfHeight = size.y / 2;
-
-        return mouseX >= position.x - halfWidth && mouseX <= position.x + halfWidth &&
-            mouseY >= position.y - halfHeight && mouseY <= position.y + halfHeight;
+        if (health <= 200) {
+            batch.draw(woodBoxDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(woodBox,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override

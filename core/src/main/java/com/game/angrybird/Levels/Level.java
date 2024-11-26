@@ -13,7 +13,12 @@ import com.game.angrybird.Pigs.Pig3;
 
 public interface Level{
 
+    int getScore();
+
+    void setScore(int score);
+
     AngryBird getGame();
+
 //    Bird getBlackBird();
 //    Bird getBlueBird();
 //    Bird getRedBird();
@@ -35,7 +40,11 @@ public interface Level{
 //    void setPig3(Pig3 pig3);
 
 
+    void updateScore(int points);
+
     void createLevel();
 
     void drawLevel();
+
+
 }

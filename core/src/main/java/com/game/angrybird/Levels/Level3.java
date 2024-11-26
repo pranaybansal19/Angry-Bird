@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -29,6 +31,7 @@ import com.game.angrybird.Levels.Complete_Fail.LevelCompleteScreen;
 import com.game.angrybird.Levels.Complete_Fail.LevelFailScreen;
 import com.game.angrybird.Levels.Pause.PauseScreen;
 import com.game.angrybird.Materials.*;
+import com.game.angrybird.Pair;
 import com.game.angrybird.Pigs.Pig1;
 import com.game.angrybird.Pigs.Pig2;
 import com.game.angrybird.Pigs.Pig3;
@@ -58,25 +61,19 @@ public class Level3 implements Level, Screen {
     private Array<Bird> birds = new Array<>();
     private Array<Body> birdsBody = new Array<>();
 
-    private Material wood, glass ,stone;
-    private Array<Body> woodHorizontalPlank = new Array<>();
-    private Array<Body> woodVerticalPlank = new Array<>();
-    private Array<Body> woodBox = new Array<>();
-    private Array<Body> glassHorizontalPlank = new Array<>();
-    private Array<Body> glassVerticalPlank = new Array<>();
-    private Array<Body> glassBox = new Array<>();
-    private Array<Body> stoneHorizontalPlank = new Array<>();
-    private Array<Body> stoneVerticalPlank = new Array<>();
-    private Array<Body> stoneBox = new Array<>();
+    private Material stone1, stone2, stone3, stone4, stone5, stone6, stone7, stone8, stone9, stone10, stone11, stone12, stone13, stone14, stone15, stone16, stone17, stone18, stone19;
+    private Array<Pair<Body, Material>> stoneHorizontalPlank = new Array<>();
+    private Array<Pair<Body, Material>> stoneVerticalPlank = new Array<>();
+    private Array<Pair<Body, Material>> stoneBox = new Array<>();
 
-    private Pig1 pig1;
-    private Array<Body> pig1List = new Array<>();
+    private Pig1 pig1_1, pig1_2;
+    private Array<Pair<Body, Pig1>> pig1List = new Array<>();
 
-    private Pig2 pig2;
-    private Array<Body> pig2List = new Array<>();
+    private Pig2 pig2_1, pig2_2;
+    private Array<Pair<Body, Pig2>> pig2List = new Array<>();
 
-    private Pig3 pig3;
-    private Array<Body> pig3List = new Array<>();
+    private Pig3 pig3_1, pig3_2;
+    private Array<Pair<Body, Pig3>> pig3List = new Array<>();
 
     int birds_left = 4;
     private boolean birdsLeftCheckStarted = false;
@@ -105,6 +102,10 @@ public class Level3 implements Level, Screen {
 
     private CollisionListener collisionListener;
 
+    private int score = 0;
+    private int bestScore;
+    private Label label1, label2;
+    private Label.LabelStyle labelStyle;
 
     public Level3(AngryBird game) {
         this.game = game;
@@ -132,26 +133,73 @@ public class Level3 implements Level, Screen {
         blueBird = new BlueBird(world, batch);
         blackBird = new BlackBird(world, batch);
 
-        pig1 = new Pig1(world, batch);
-        pig2 = new Pig2(world, batch);
-        pig3 = new Pig3(world, batch);
+        pig1_1 = new Pig1(world, batch);
+        pig1_2 = new Pig1(world, batch);
+        pig2_1 = new Pig2(world, batch);
+        pig2_2 = new Pig2(world, batch);
+        pig3_1 = new Pig3(world, batch);
+        pig3_2 = new Pig3(world, batch);
 
-        wood = new Wood(world, batch);
-        glass = new Glass(world, batch);
-        stone = new Stone(world, batch);
-
+        stone1 = new Stone(world, batch);
+        stone2 = new Stone(world, batch);
+        stone3 = new Stone(world, batch);
+        stone4 = new Stone(world, batch);
+        stone5 = new Stone(world, batch);
+        stone6 = new Stone(world, batch);
+        stone7 = new Stone(world, batch);
+        stone8 = new Stone(world, batch);
+        stone9 = new Stone(world, batch);
+        stone10 = new Stone(world, batch);
+        stone11 = new Stone(world, batch);
+        stone12 = new Stone(world, batch);
+        stone13 = new Stone(world, batch);
+        stone14 = new Stone(world, batch);
+        stone15 = new Stone(world, batch);
+        stone16 = new Stone(world, batch);
+        stone17 = new Stone(world, batch);
+        stone18 = new Stone(world, batch);
+        stone19 = new Stone(world, batch);
 
         slingShot = new SlingShot(viewport, stage);
 
         dynamicBodyDef.type = BodyDef.BodyType.DynamicBody;
         staticBodyDef.type = BodyDef.BodyType.StaticBody;
 
-        collisionListener = new CollisionListener(world);
+        collisionListener = new CollisionListener(world, game, this);
         world.setContactListener(collisionListener);
+
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.WHITE);
+
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
+        bestScore = game.getLevel3BestScore();
 
         createGesture();
         createLevel();
 
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
+    public void updateScore(int points) {
+        score += points;
+        if (score > bestScore) {
+            bestScore += points;
+        }
+
+        label1.setText("Score :  " + String.format("%05d", score));
+        label2.setText("Best Score :  " + String.format("%05d", bestScore));
     }
 
     @Override
@@ -314,6 +362,9 @@ public class Level3 implements Level, Screen {
                         }
                     } else {
                         slingShot.launchProjectile(releasePoint, initialTouch, projectileBodies.get(projectileBodies.size - 1));
+                        if (game.getMainMenuScreen().getSettings().isSound()) {
+                            game.launchBird.play();
+                        }
                         birds_left--;
                     }
 
@@ -378,55 +429,70 @@ public class Level3 implements Level, Screen {
 
     public void createTower() {
 
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f));
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 36f, 7f, 1f, 4.5f));
+        Body b1 = stone1.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f);
+        Body b2 = stone2.createQuad(dynamicBodyDef, 36f, 7f, 1f, 4.5f);
+        Body b3 = stone3.createQuad(dynamicBodyDef, 33.8f, 11.5f, 4.5f, 1.5f);
+        Body b4 = stone4.createQuad(dynamicBodyDef, 38.5f, 11.5f, 5f, 1.5f);
+        Body b5 = stone5.createQuad(dynamicBodyDef, 40.5f, 8.5f, 1f, 4.5f);
+        Body b6 = stone6.createQuad(dynamicBodyDef, 36f, 16.5f, 1f, 8f);
+        Body b7 = stone7.createQuad(dynamicBodyDef, 40.5f, 16.5f, 1f, 8f);
+        Body b8 = stone8.createQuad(dynamicBodyDef, 37, 4f, 3f, 3.5f);
+        Body b9 = stone9.createQuad(dynamicBodyDef, 40, 4f, 3f, 3.5f);
+        Body b10 = stone10.createQuad(dynamicBodyDef, 38.5f, 22f, 6f, 1.5f);
+        Body b11 = stone11.createQuad(dynamicBodyDef, 45f, 22f, 6f, 1.5f);
+        Body b12 = stone12.createQuad(dynamicBodyDef, 42f, 24f, 5f, 1.5f);
+        Body b13 = stone13.createQuad(dynamicBodyDef, 38.5f, 27.5f, 1f, 8f);
+        Body b14 = stone14.createQuad(dynamicBodyDef, 38.5f, 32f, 6f, 1.5f);
+        Body b15 = stone15.createQuad(dynamicBodyDef, 45f, 27.5f, 1f, 8f);
+        Body b16 = stone16.createQuad(dynamicBodyDef, 45f, 32f, 6f, 1.5f);
+        Body b17 = stone17.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f);
+        Body b18 = stone18.createQuad(dynamicBodyDef, 38.5f, 33f, 3f, 3.5f);
+        Body b19 = stone19.createQuad(dynamicBodyDef, 45, 33f, 3f, 3.5f);
+
+        Body b20 = pig1_1.create(dynamicBodyDef, 33.5f, 5f, 1.3f);
+        Body b21 = pig3_1.create(dynamicBodyDef, 38f, 6f, 1.3f);
+        Body b22 = pig3_2.create(dynamicBodyDef, 38f, 12.5f, 1.3f);
+        Body b23 = pig1_2.create(dynamicBodyDef, 41.5f, 29.5f, 1.3f);
+        Body b24 = pig2_1.create(dynamicBodyDef, 38.5f, 34f, 1.3f);
+        Body b25 = pig2_2.create(dynamicBodyDef, 44.5f, 34f, 1.3f);
 
 
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 33.8f, 11.5f, 4.5f, 1.5f));
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 11.5f, 5f, 1.5f));
 
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 40.5f, 8.5f, 1f, 4.5f));
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 36f, 16.5f, 1f, 8f));
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 40.5f, 16.5f, 1f, 8f));
+        stoneVerticalPlank.add(new Pair<>(b1,stone1));
+        stoneVerticalPlank.add(new Pair<>(b2,stone2));
 
+        stoneHorizontalPlank.add(new Pair<>(b3,stone3));
+        stoneHorizontalPlank.add(new Pair<>(b4,stone4));
 
-        stoneBox.add(stone.createQuad(dynamicBodyDef, 37, 4f, 3f, 3.5f));
-        stoneBox.add(stone.createQuad(dynamicBodyDef, 40, 4f, 3f, 3.5f));
+        stoneVerticalPlank.add(new Pair<>(b5,stone5));
+        stoneVerticalPlank.add(new Pair<>(b6,stone6));
+        stoneVerticalPlank.add(new Pair<>(b7,stone7));
 
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 22f, 6f, 1.5f));
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 45f, 22f, 6f, 1.5f));
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 42f, 24f, 5f, 1.5f));
+        stoneBox.add(new Pair<>(b8,stone8));
+        stoneBox.add(new Pair<>(b9,stone9));
 
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 27.5f, 1f, 8f));
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 38.5f, 32f, 6f, 1.5f));
+        stoneHorizontalPlank.add(new Pair<>(b10,stone10));
+        stoneHorizontalPlank.add(new Pair<>(b11,stone11));
+        stoneHorizontalPlank.add(new Pair<>(b12,stone12));
 
+        stoneVerticalPlank.add(new Pair<>(b13,stone13));
+        stoneHorizontalPlank.add(new Pair<>(b14,stone14));
 
-        stoneVerticalPlank.add(stone.createQuad(dynamicBodyDef, 45f, 27.5f, 1f, 8f));
-        stoneHorizontalPlank.add(stone.createQuad(dynamicBodyDef, 45f, 32f, 6f, 1.5f));
+        stoneVerticalPlank.add(new Pair<>(b15,stone15));
+        stoneHorizontalPlank.add(new Pair<>(b16,stone16));
 
-        stoneBox.add(stone.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f));
-        stoneBox.add(stone.createQuad(dynamicBodyDef, 38.5f, 33f, 3f, 3.5f));
-        stoneBox.add(stone.createQuad(dynamicBodyDef, 45, 33f, 3f, 3.5f));
+        stoneBox.add(new Pair<>(b17,stone17));
+        stoneBox.add(new Pair<>(b18,stone18));
+        stoneBox.add(new Pair<>(b19,stone19));
 
-        pig1List.add(pig1.create(dynamicBodyDef, 33.5f, 5f, 1f));
-        pig3List.add(pig3.create(dynamicBodyDef, 38f, 6f, 1f));
-        pig3List.add(pig3.create(dynamicBodyDef, 38f, 12.5f, 1f));
-        pig1List.add(pig1.create(dynamicBodyDef, 41.5f, 29.5f, 1f));
+        pig1List.add(new Pair<>(b20,pig1_1));
+        pig3List.add(new Pair<>(b21,pig3_1));
+        pig3List.add(new Pair<>(b22,pig3_2));
+        pig1List.add(new Pair<>(b23,pig1_1));
 
-        pig2List.add(pig2.create(dynamicBodyDef, 38.5f, 34f, 1f));
-        pig2List.add(pig2.create(dynamicBodyDef, 44.5f, 34f, 1f));
+        pig2List.add(new Pair<>(b24,pig2_1));
+        pig2List.add(new Pair<>(b25,pig2_2));
 
-//
-//
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 34.5f, 29.5f, 1.5f, 11f));
-//        woodVerticalPlank.add(wood.createQuad(dynamicBodyDef, 41.5f, 29.5f, 1.5f, 11f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 38f, 35f, 9f, 2f));
-//
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 29f, 20f, 7f, 2f));
-//        woodHorizontalPlank.add(wood.createQuad(dynamicBodyDef, 47f, 20f, 7f, 2f));
-//
-//
     }
 
     public void createBirds() {
@@ -444,6 +510,16 @@ public class Level3 implements Level, Screen {
     @Override
     public void createLevel() {
 
+        label1 = new Label("Score :  " + String.format("%05d", score), labelStyle);
+        label1.setFontScale(0.12f);
+        label1.setColor(Color.WHITE);
+        label1.setPosition(38, 38);
+
+        label2 = new Label("Best Score :  " + String.format("%05d", bestScore), labelStyle);
+        label2.setFontScale(0.12f);
+        label2.setColor(Color.WHITE);
+        label2.setPosition(20, 38);
+
         background = new Texture(Gdx.files.internal("Level 3/Background.png"));
         pause = new Image(new Texture(Gdx.files.internal("Level 3/PauseBtn.png")));
 
@@ -454,7 +530,7 @@ public class Level3 implements Level, Screen {
 
 
         groundBody = ground.create(staticBodyDef, 0, -7.5f, viewport.getWorldWidth(), 10);
-        ground.create(staticBodyDef,46,18,4,2);
+        ground.create(staticBodyDef, 46, 18, 4, 2);
         ground.create(staticBodyDef, 51, 25, 1, viewport.getWorldHeight());
 
         createTower();
@@ -476,6 +552,8 @@ public class Level3 implements Level, Screen {
 
         batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         stage.addActor(pause);
+        stage.addActor(label1);
+        stage.addActor(label2);
 
         slingShot.draw();
 
@@ -498,44 +576,24 @@ public class Level3 implements Level, Screen {
 
         }
 
-        for (Body body : woodHorizontalPlank) {
-            wood.drawPlankHorizontal(body);
+        for (int i = 0; i < stoneBox.size; ++i) {
+            stoneBox.get(i).getSecond().drawBox(stoneBox.get(i).getFirst());
         }
-        for (Body body : woodVerticalPlank) {
-            wood.drawPlankVertical(body);
+        for (int i = 0; i < stoneVerticalPlank.size; ++i) {
+            stoneVerticalPlank.get(i).getSecond().drawPlankVertical(stoneVerticalPlank.get(i).getFirst());
         }
-        for (Body body : woodBox) {
-            wood.drawBox(body);
-        }
-
-        for (Body body : pig1List) {
-            pig1.draw(body, 2.5f, 2.5f);
-        }
-        for (Body body : pig2List) {
-            pig2.draw(body, 2.5f, 2.5f);
-        }
-        for (Body body : pig3List) {
-            pig3.draw(body, 2.5f, 2.5f);
+        for (int i = 0; i < stoneHorizontalPlank.size; ++i) {
+            stoneHorizontalPlank.get(i).getSecond().drawPlankHorizontal(stoneHorizontalPlank.get(i).getFirst());
         }
 
-        for (Body body : glassHorizontalPlank) {
-            glass.drawPlankHorizontal(body);
+        for (int i = 0; i < pig1List.size; ++i) {
+            pig1List.get(i).getSecond().draw(pig1List.get(i).getFirst(),3f,3.5f);
         }
-        for (Body body : glassVerticalPlank) {
-            glass.drawPlankVertical(body);
+        for (int i = 0; i < pig2List.size; ++i) {
+            pig2List.get(i).getSecond().draw(pig2List.get(i).getFirst(),3f,3.5f);
         }
-        for (Body body : glassBox) {
-            glass.drawBox(body);
-        }
-
-        for (Body body : stoneHorizontalPlank) {
-            stone.drawPlankHorizontal(body);
-        }
-        for (Body body : stoneVerticalPlank) {
-            stone.drawPlankVertical(body);
-        }
-        for (Body body : stoneBox) {
-            stone.drawBox(body);
+        for (int i = 0; i < pig3List.size; ++i) {
+            pig3List.get(i).getSecond().draw(pig3List.get(i).getFirst(),3f,3.5f);
         }
 
         for (int i = 0; i < birds.size; ++i) {
@@ -567,8 +625,13 @@ public class Level3 implements Level, Screen {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
+                    if (bestScore > game.getLevel3BestScore()) {
+                        game.setLevel3BestScore(bestScore);
+                    }
+                    game.setLevel3Locked(false);
+                    game.setLevel1Locked(false);
                     game.setLevel2Locked(false);
-                    game.setScreen(new LevelCompleteScreen(game.getLevel1(),game));
+                    game.setScreen(new LevelCompleteScreen(game.getLevel3(), game));
                 }
             }, 3);
         } else if (birds_left == 0 && !birdsLeft) {
@@ -579,10 +642,16 @@ public class Level3 implements Level, Screen {
                 public void run() {
                     if (birds_left == 0) {
                         if (pig1List.isEmpty() && pig2List.isEmpty() && pig3List.isEmpty()) {
+
+                            if (bestScore > game.getLevel3BestScore()) {
+                                game.setLevel3BestScore(bestScore);
+                            }
+                            game.setLevel3Locked(false);
+                            game.setLevel1Locked(false);
                             game.setLevel2Locked(false);
-                            game.setScreen(new LevelCompleteScreen(game.getLevel1(),game));
+                            game.setScreen(new LevelCompleteScreen(game.getLevel3(), game));
                         } else {
-                            game.setScreen(new LevelFailScreen(game.getLevel1()));
+                            game.setScreen(new LevelFailScreen(game.getLevel3()));
                         }
                     }
                 }
@@ -594,7 +663,7 @@ public class Level3 implements Level, Screen {
         drawLevel();
 
         batch.end();
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
 
         stage.act();
         stage.draw();
@@ -622,7 +691,7 @@ public class Level3 implements Level, Screen {
             shapeRenderer.end();
         }
 
-        collisionListener.update(woodBox, woodHorizontalPlank, woodVerticalPlank, glassBox, glassHorizontalPlank, glassVerticalPlank,stoneBox,stoneVerticalPlank,stoneHorizontalPlank, birdsBody, pig1List, pig2List, pig3List);
+        collisionListener.update(new Array<>(),new Array<>(),new Array<>(),new Array<>(),new Array<>(),new Array<>(),stoneBox,stoneHorizontalPlank,stoneVerticalPlank,pig1List,pig2List,pig3List);
     }
 
 

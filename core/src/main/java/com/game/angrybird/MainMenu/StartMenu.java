@@ -1,10 +1,13 @@
 package com.game.angrybird.MainMenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.game.angrybird.Handler;
@@ -16,6 +19,8 @@ public class StartMenu {
     private Texture background;
 
     private Image play, setting, quit, save, load;
+    private Label label;
+    private Label.LabelStyle labelStyle;
 
     public StartMenu(MainMenuScreen mainMenuScreen) {
         this.mainMenuScreen = mainMenuScreen;
@@ -23,6 +28,17 @@ public class StartMenu {
     }
 
     public void create() {
+
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.WHITE);
+
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
+        label = new Label("Welcome, \n " + mainMenuScreen.getGame().getUsername() + "!", labelStyle);
+        label.setFontScale(2.0f);
+        label.setColor(Color.WHITE);
+        label.setPosition(mainMenuScreen.getViewport().getWorldWidth() - 150, mainMenuScreen.getViewport().getWorldHeight() - 80);
 
         background = new Texture(Gdx.files.internal("Start Menu/Background.png"));
 
@@ -98,6 +114,10 @@ public class StartMenu {
 
     }
 
+    public void updateUsername() {
+        label.setText("Welcome, \n " + mainMenuScreen.getGame().getUsername() + "!");
+    }
+
     public void draw() {
 
         mainMenuScreen.getBatch().begin();
@@ -109,6 +129,7 @@ public class StartMenu {
         mainMenuScreen.getStage().addActor(save);
         mainMenuScreen.getStage().addActor(setting);
         mainMenuScreen.getStage().addActor(quit);
+        mainMenuScreen.getStage().addActor(label);
 
         mainMenuScreen.getBatch().end();
 
@@ -120,6 +141,7 @@ public class StartMenu {
         save.remove();
         setting.remove();
         quit.remove();
+        label.remove();
     }
 
 }

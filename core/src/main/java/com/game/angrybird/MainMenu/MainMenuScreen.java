@@ -2,6 +2,7 @@ package com.game.angrybird.MainMenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,7 +23,7 @@ public class MainMenuScreen implements Screen {
     private Quit quit;
     private SaveProgress saveProgress;
     private Load load;
-    private StartMenu startMenu;
+    StartMenu startMenu;
 
     private Viewport viewport;
     private Camera camera;
@@ -34,6 +35,7 @@ public class MainMenuScreen implements Screen {
     private long startTime;
 
     private boolean settingOpen, exitOpen, profileOpen, saveProgressOpen, loadOpen;
+
 
     // Getters
     public AngryBird getGame() {
@@ -58,6 +60,10 @@ public class MainMenuScreen implements Screen {
 
     public long getStartTime() {
         return startTime;
+    }
+
+    public Setting getSettings() {
+        return settings;
     }
 
     public boolean isExitOpen() {
@@ -149,6 +155,9 @@ public class MainMenuScreen implements Screen {
         startMenu = new StartMenu(this);
         quit = new Quit(this);
         load = new Load(this);
+
+        game.backgroundMusic.play();
+
     }
 
 
@@ -205,6 +214,8 @@ public class MainMenuScreen implements Screen {
 
             load.draw();
         } else {
+
+
             profile.destroy();
             saveProgress.destroy();
             settings.destroy();

@@ -12,13 +12,28 @@ public class Pig1 implements Pig {
     private World world;
     private Batch batch;
 
-    private TextureRegion pig;
+    private float health = 350;
+
+    private TextureRegion pig,pigDamaged;
+
+
+    @Override
+    public float getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        this.health = health;
+    }
+
 
     public Pig1(World world, Batch batch) {
         this.world = world;
         this.batch = batch;
 
         pig = new TextureRegion(new Texture(Gdx.files.internal("Pigs/Pig1.png")));
+        pigDamaged = new TextureRegion(new Texture(Gdx.files.internal("Pigs/Pig1Damaged.png")));
     }
 
     @Override
@@ -36,6 +51,7 @@ public class Pig1 implements Pig {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.3f;
 
+        body.setUserData(this);
         body.createFixture(fixtureDef);
         circle.dispose();
 
@@ -51,28 +67,27 @@ public class Pig1 implements Pig {
         CircleShape shape = (CircleShape) body.getFixtureList().get(0).getShape();
         float radius = shape.getRadius();
 
-        batch.draw(pig,
-            position.x - radius, position.y - radius,
-            radius, radius,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
-
-    }
-
-    @Override
-    public boolean isClicked(Body body, float mouseX, float mouseY) {
-        Vector2 position = body.getPosition();
-        CircleShape shape = (CircleShape) body.getFixtureList().get(0).getShape();
-        float radius = shape.getRadius();
-
-        float distance = position.dst(mouseX, mouseY);
-        return distance <= radius;
+        if (health <= 200) {
+            batch.draw(pigDamaged,
+                position.x - radius, position.y - radius,
+                radius, radius,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(pig,
+                position.x - radius, position.y - radius,
+                radius, radius,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override
     public void destroy() {
-
     }
+
 }
