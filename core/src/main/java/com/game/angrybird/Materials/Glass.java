@@ -13,6 +13,21 @@ public class Glass implements Material {
     private Batch batch;
 
     private TextureRegion glassPlankHorizontal, glassPlankVertical, glassBox;
+    private TextureRegion glassPlankHorizontalDamaged, glassPlankVerticalDamaged, glassBoxDamaged;
+
+    float health = 350;
+
+    Vector2 size;
+
+    @Override
+    public float getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        this.health = health;
+    }
 
     public Glass(World world, Batch batch) {
         this.world = world;
@@ -21,6 +36,9 @@ public class Glass implements Material {
         glassPlankHorizontal = new TextureRegion(new Texture(Gdx.files.internal("Glass/GlassPlankHorizontal.png")));
         glassPlankVertical = new TextureRegion(new Texture(Gdx.files.internal("Glass/GlassPlankVertical.png")));
         glassBox = new TextureRegion(new Texture(Gdx.files.internal("Glass/GlassBox.png")));
+        glassPlankHorizontalDamaged = new TextureRegion(new Texture(Gdx.files.internal("Glass/GlassPlankHorizontalDamaged.png")));
+        glassPlankVerticalDamaged = new TextureRegion(new Texture(Gdx.files.internal("Glass/GlassPlankVerticalDamaged.png")));
+        glassBoxDamaged = new TextureRegion(new Texture(Gdx.files.internal("Glass/GlassBoxDamaged.png")));
     }
 
     @Override
@@ -41,7 +59,9 @@ public class Glass implements Material {
         body.createFixture(fixtureDef);
         box.dispose();
 
-        body.setUserData(new Vector2(width, height));
+        size = new Vector2(width, height);
+
+        body.setUserData(this);
 
         return body;
     }
@@ -51,17 +71,26 @@ public class Glass implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(glassPlankHorizontal,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(glassPlankHorizontalDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(glassPlankHorizontal,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override
@@ -69,17 +98,26 @@ public class Glass implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(glassPlankVertical,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(glassPlankVerticalDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(glassPlankVertical,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override
@@ -87,17 +125,26 @@ public class Glass implements Material {
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
 
-        Vector2 size = (Vector2) body.getUserData();
         float width = size.x;
         float height = size.y;
 
-        batch.draw(glassBox,
-            position.x - width / 2, position.y - height / 2,
-            width / 2, height / 2,
-            width, height,
-            1f, 1f,
-            (float) Math.toDegrees(angle)
-        );
+        if (health <= 200) {
+            batch.draw(glassBoxDamaged,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        } else {
+            batch.draw(glassBox,
+                position.x - width / 2, position.y - height / 2,
+                width / 2, height / 2,
+                width, height,
+                1f, 1f,
+                (float) Math.toDegrees(angle)
+            );
+        }
     }
 
     @Override
@@ -106,14 +153,5 @@ public class Glass implements Material {
         batch.dispose();
     }
 
-    @Override
-    public float getHealth() {
-        return 0;
-    }
-
-    @Override
-    public void setHealth(float v) {
-
-    }
 
 }
