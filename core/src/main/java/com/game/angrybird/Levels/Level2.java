@@ -422,21 +422,21 @@ public class Level2 implements Level, Screen {
 
         Body b1 = wood1.createQuad(dynamicBodyDef, 32f, 5.5f, 1f, 8f);
         Body b2 = wood2.createQuad(dynamicBodyDef, 36f, 7f, 1f, 8f);
-        Body b3 = wood3.createQuad(dynamicBodyDef, 34f, 11.5f, 5.5f, 1.5f);
+        Body b3 = wood3.createQuad(dynamicBodyDef, 34f, 12.5f, 5.5f, 1.5f);
         Body b4 = wood4.createQuad(dynamicBodyDef, 36.3f, 13.5f, 5f, 1.5f);
-        Body b5 = wood5.createQuad(dynamicBodyDef, 36f, 16f, 1f, 8f);
-        Body b6 = wood6.createQuad(dynamicBodyDef, 36f, 22f, 6f, 1.5f);
+        Body b5 = wood5.createQuad(dynamicBodyDef, 36f, 19f, 1f, 8f);
+        Body b6 = wood6.createQuad(dynamicBodyDef, 36f, 24f, 6f, 1.5f);
         Body b7 = wood7.createQuad(dynamicBodyDef, 42.5f, 2f, 6f, 1.5f);
         Body b8 = wood8.createQuad(dynamicBodyDef, 40f, 7f, 1f, 7f);
         Body b9 = wood9.createQuad(dynamicBodyDef, 40, 13f, 3f, 3.5f);
-        Body b10 = wood10.createQuad(dynamicBodyDef, 45f, 7f, 1f, 8f);
-        Body b11 = wood11.createQuad(dynamicBodyDef, 45f, 12f, 5f, 1.5f);
-        Body b12 = wood12.createQuad(dynamicBodyDef, 36f, 24f, 3f, 3.5f);
+        Body b10 = wood10.createQuad(dynamicBodyDef, 44.5f, 9f, 1f, 8f);
+        Body b11 = wood11.createQuad(dynamicBodyDef, 44.5f, 12f, 5f, 1.5f);
+        Body b12 = wood12.createQuad(dynamicBodyDef, 36f, 27f, 3f, 3.5f);
 
-        Body b13 = pig1_1.create(dynamicBodyDef, 32.5f, 14f, 1.5f);
-        Body b14 = pig1_2.create(dynamicBodyDef, 37.5f, 15f, 1.5f);
-        Body b15 = pig2_1.create(dynamicBodyDef, 36f, 28f, 1.5f);
-        Body b16 = pig2_2.create(dynamicBodyDef, 44.5f, 14f, 1.5f);
+        Body b13 = pig1_1.create(dynamicBodyDef, 33.8f, 5f, 1.5f);
+        Body b14 = pig1_2.create(dynamicBodyDef, 39.8f, 16f, 1.5f);
+//        Body b15 = pig2_1.create(dynamicBodyDef, 36f, 28f, 1.5f);
+        Body b16 = pig2_2.create(dynamicBodyDef, 44.4f, 14f, 1.5f);
 
         woodVerticalPlank.add(new Pair<>(b1,wood1));
         woodVerticalPlank.add(new Pair<>(b2,wood2));
@@ -461,7 +461,7 @@ public class Level2 implements Level, Screen {
         pig1List.add(new Pair<>(b14,pig1_2));
 
 
-        pig2List.add(new Pair<>(b15,pig2_1));
+//        pig2List.add(new Pair<>(b15,pig2_1));
         pig2List.add(new Pair<>(b16,pig2_2));
 
     }
@@ -632,7 +632,7 @@ public class Level2 implements Level, Screen {
         drawLevel();
 
         batch.end();
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
 
         stage.act();
         stage.draw();

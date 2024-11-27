@@ -445,16 +445,16 @@ public class Level3 implements Level, Screen {
         Body b14 = stone14.createQuad(dynamicBodyDef, 38.5f, 32f, 6f, 1.5f);
         Body b15 = stone15.createQuad(dynamicBodyDef, 45f, 27.5f, 1f, 8f);
         Body b16 = stone16.createQuad(dynamicBodyDef, 45f, 32f, 6f, 1.5f);
-        Body b17 = stone17.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f);
+//        Body b17 = stone17.createQuad(dynamicBodyDef, 42, 27f, 2.5f, 3f);
         Body b18 = stone18.createQuad(dynamicBodyDef, 38.5f, 33f, 3f, 3.5f);
         Body b19 = stone19.createQuad(dynamicBodyDef, 45, 33f, 3f, 3.5f);
 
         Body b20 = pig1_1.create(dynamicBodyDef, 33.5f, 5f, 1.3f);
         Body b21 = pig3_1.create(dynamicBodyDef, 38f, 6f, 1.3f);
         Body b22 = pig3_2.create(dynamicBodyDef, 38f, 12.5f, 1.3f);
-        Body b23 = pig1_2.create(dynamicBodyDef, 41.5f, 29.5f, 1.3f);
-        Body b24 = pig2_1.create(dynamicBodyDef, 38.5f, 34f, 1.3f);
-        Body b25 = pig2_2.create(dynamicBodyDef, 44.5f, 34f, 1.3f);
+        Body b23 = pig1_2.create(dynamicBodyDef, 41.8f, 26f, 1.3f);
+//        Body b24 = pig2_1.create(dynamicBodyDef, 38.5f, 33.5f, 1.3f);
+        Body b25 = pig2_2.create(dynamicBodyDef, 42f, 35f, 1.3f);
 
 
 
@@ -481,7 +481,7 @@ public class Level3 implements Level, Screen {
         stoneVerticalPlank.add(new Pair<>(b15,stone15));
         stoneHorizontalPlank.add(new Pair<>(b16,stone16));
 
-        stoneBox.add(new Pair<>(b17,stone17));
+//        stoneBox.add(new Pair<>(b17,stone17));
         stoneBox.add(new Pair<>(b18,stone18));
         stoneBox.add(new Pair<>(b19,stone19));
 
@@ -490,7 +490,7 @@ public class Level3 implements Level, Screen {
         pig3List.add(new Pair<>(b22,pig3_2));
         pig1List.add(new Pair<>(b23,pig1_1));
 
-        pig2List.add(new Pair<>(b24,pig2_1));
+//        pig2List.add(new Pair<>(b24,pig2_1));
         pig2List.add(new Pair<>(b25,pig2_2));
 
     }
