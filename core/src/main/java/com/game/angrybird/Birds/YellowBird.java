@@ -6,20 +6,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.game.angrybird.AngryBird;
+
+import java.util.Objects;
 
 public class YellowBird implements Bird{
 
     private World world;
     private Batch batch;
-    private float speed;
 
+    private Body body;
     private TextureRegion bird;
+
+    private boolean abilityUsed = false;
 
     public YellowBird(World world, Batch batch) {
         this.world = world;
         this.batch = batch;
 
-        bird = new TextureRegion(new Texture(Gdx.files.internal("Birds/YellowBird.png")));
+        bird = new TextureRegion(Objects.requireNonNull(AngryBird.loadTextureSafely("Birds/YellowBird.png")));
     }
 
     // Setters
@@ -36,6 +41,16 @@ public class YellowBird implements Bird{
     @Override
     public void setBird(TextureRegion bird) {
         this.bird = bird;
+    }
+
+    @Override
+    public void setAbilityUsed(boolean abilityUsed) {
+        this.abilityUsed = abilityUsed;
+    }
+
+    @Override
+    public void setBody(Body body) {
+        this.body = body;
     }
 
     // Getters
@@ -55,13 +70,20 @@ public class YellowBird implements Bird{
     }
 
     @Override
-    public void useSpecialAbility(){}
+    public Body getBody() {
+        return body;
+    }
 
     @Override
-    public Body create(BodyDef bodyDef, float x, float y, float radius) {
+    public boolean isAbilityUsed() {
+        return abilityUsed;
+    }
+
+    @Override
+    public void create(BodyDef bodyDef, float x, float y, float radius) {
         bodyDef.position.set(x, y);
 
-        Body body = world.createBody(bodyDef);
+        body = world.createBody(bodyDef);
 
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
@@ -75,11 +97,10 @@ public class YellowBird implements Bird{
         body.createFixture(fixtureDef);
         circle.dispose();
 
-        return body;
     }
 
     @Override
-    public void draw(Body body, float width, float height) {
+    public void draw(float width, float height) {
 
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
@@ -95,16 +116,6 @@ public class YellowBird implements Bird{
             (float) Math.toDegrees(angle)
         );
 
-    }
-
-    @Override
-    public boolean isClicked(Body body, float mouseX, float mouseY) {
-        Vector2 position = body.getPosition();
-        CircleShape shape = (CircleShape) body.getFixtureList().get(0).getShape();
-        float radius = shape.getRadius();
-
-        float distance = position.dst(mouseX, mouseY);
-        return distance <= radius;
     }
 
     @Override
