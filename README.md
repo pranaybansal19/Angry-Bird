@@ -14,11 +14,12 @@ level to unlock another level.
 1. [Overview](#Overview)
 2. [Classes](#classes)
 3. [Interfaces](#classes)
-4. [How to run?](#how-to-run)
-5. [GitHub Link](#github-link---angry-birds)
-6. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
-7. [Assets](#assets)
-8. [Contributions]()
+4. [Abtract Classes](#abstract-class)
+5. [How to run?](#how-to-run)
+6. [GitHub Link](#github-link---angry-birds)
+7. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
+8. [Assets](#assets)
+9. [Contributions](#contribution)
 
 ## Overview
 - This project is a fun game "Angry Bird" developed using LibGDX framework.
@@ -31,82 +32,100 @@ level to unlock another level.
 2. ### Handler
    Handle event listeners that can be applied on LibGDX Image.
 
-3. ### BlackBird :
+3. ## FileHandler
+    Handle saving of games and player object.
+
+4. ## Player
+    Stores data of a player like username, best scores.
+
+5. ### BlackBird :
    Create and draw dynamic body for black bird on given batch and world. Also provide methods - `useSpecialAbility()` and `isClicked()`.
 
-4. ### RedBird :
+6. ### RedBird :
    Create and draw dynamic body for red bird on given batch and world. Also provide methods - `useSpecialAbility()` and `isClicked()`.
 
-5. ### BlueBird :
+7. ### BlueBird :
    Create and draw dynamic body for blue bird on given batch and world. Also provide methods - `useSpecialAbility()` and `isClicked()`.
 
-6. ### YellowBird :
+8. ### YellowBird :
    Create and draw dynamic body for yellow bird on given batch and world. Also provide methods - `useSpecialAbility()` and `isClicked()`.
 
-7. ### Pig1
+9. ### Pig1
    Create and draw dynamic body for pig1 on given batch and world. Also provide method - `isClicked()` to check whether its clicked or not.
 
-8. ### Pig2
+10. ### Pig2
    Create and draw dynamic body for pig2 on given batch and world. Also provide method - `isClicked()` to check whether its clicked or not.
 
-9. ### Pig3
+11. ### Pig3
    Create and draw dynamic body for pig3 on given batch and world. Also provide method - `isClicked()` to check whether its clicked or not.
 
-10. ### LoadingScreen
+12. ### LoadingScreen
     Draw and render loading screen - background, progress bar and load to MainMenuScreen.
 
-11. ### MainMenuScreen
+13. ### MainMenuScreen
     Draw and render main menu screen elements - start menu, load game, save game, setting, quit.
 
-12. ### StartMenu
+14. ### StartMenu
     Provide and draw start menu options. Also add respective buttons event handlers.
 
-13. ### Load
+15. ### Load
     Draw load game screen. It shows saved games.
 
-14. ### SaveProgress
+16. ### SaveProgress
     Draw Save progress screen and save the current progress of game.
 
-15. ### Setting
+17. ### Setting
     Draw setting screen and provide options - Music ON/OFF, Sound ON/OFF.
 
-16. ### Profile
+18. ### Profile
     Draw profile screen and show username. Also to change username.
 
-17. ### Quit
+19. ### Quit
     Draw quit screen and allow to exit the game.
 
-18. ### Glass
+20. ### Glass
     Create and draw dynamic body for glass blocks - Plank(vertical/horizontal) and box.
 
-19. ### Stone
+21. ### Stone
     Create and draw dynamic body for stone blocks - Plank(vertical/horizontal) and box.
 
-20. ### Wood
+22. ### Wood
     Create and draw dynamic body for wooden blocks - Plank(vertical/horizontal) and box.
 
-21. ### TNT
-    Create and draw dynamic body for TNT blocks.
-
-22. ### SlingShot
+23. ### SlingShot
     Create and draw slingshot.
 
-23. ### Ground
+24. ### Ground
     Create and draw static ground body for levels.
 
-24. ### LevelMenuScreen
+25. ### LevelMenuScreen
     Draw and render level menu screen which has initially 3 levels unlocked.
 
-25. ### Level1
+26. ### Level1
     Draw and render level 1 screen. Adding different blocks, pigs, birds using their object.
 
-26. ### PauseScreen
+27. ### Level1Container
+    Stores position, speed, angle, sizes of different blocks, pigs, birds to create Level 1.
+
+28. ### Level2
+    Draw and render level 2 screen. Adding different blocks, pigs, birds using their object.
+
+29. ### Level2Container
+    Stores position, speed, angle, sizes of different blocks, pigs, birds to create Level 2.
+
+30. ### Level3
+    Draw and render level 3 screen. Adding different blocks, pigs, birds using their object.
+
+31. ### Level3Container
+    Stores position, speed, angle, sizes of different blocks, pigs, birds to create Level 3.
+
+32. ### PauseScreen
     Draw and render in-game pause menu. Show following options - Resume, Restart, Save, Menu.
 
-27. ### LevelCompleteScreen
+33. ### LevelCompleteScreen
     Draw and render level complete screen when all pigs are dead.
 
-28. ### LevelFailScreen
+34. ### LevelFailScreen
     Draw and render level fail screen when all birds are used yet pigs are alive.
 
 
@@ -118,9 +137,33 @@ level to unlock another level.
    
 2. ### Material
     - Implemented by `Glass`, `Wood`, `Stone`.
-   
-3. ### Level
-    - Implemented by `Level1`.
+
+
+
+## Abstract Class
+
+1. ### Level
+    - Extended by `Level1`, `Level2`, `Level3`.
+
+
+## Bonus Features
+
+1. Birds can use **Special Abilities** such as -
+   1. `Red Bird` size increases 
+   2. `Yellow Bird` speed increases
+   3. `Black Bird` explodes
+   4. `Blue Bird` split into three smaller `Blue Birds`
+
+2. A Player can store any number of saved games which can be loaded.
+
+
+## Design Patterns
+
+1. ### Singleton Pattern
+   - `AngryBird` class can only have one instance. 
+
+2. ### Facade Pattern
+   - hiding the complex code of `Level1`, `Level2`, `Level3`.
 
 ## How to run?
 
@@ -128,8 +171,9 @@ level to unlock another level.
 - Steps:
   1. Clone the Repository/Download : `git clone https://github.com/pranaybansal19/Angry-Bird`
   2. Build the project : `gradlew build`
-  3. Run the project : `gradlew lwjgl3:run`
-    
+  3. To run tests : `gradlew test`
+  4. Run the project : `gradlew lwjgl3:run`
+
     
 ## Github Link - [Angry Birds](https://github.com/pranaybansal19/Angry-Bird)
 
@@ -170,10 +214,13 @@ The responsibilities were divided as follows:
     
     - Assets : `Birds`, `Materials`(`Wood`, `Stone`, `Glass`), `SlingShot`, `Pig`, `Loading Screen Background`, `Loading Screen Progress Bar`, `Level Complete Screen`, `Level Fail Screen`, `Level Menu Screen`
     - Implemented classes related to drawing birds - `RedBird`, `BlueBird`, `BlackBird`, `YellowBird` classes
-    - Implemented classes related to material - `Wood`, `Stone`, `Glass`, `TNT`, `Catapult` classes
+    - Implemented classes related to material - `Wood`, `Stone`, `Glass`, `SlingShot` classes
     - Implemented `LoadingScreen` class
     - Implemented `LevelCompleteScreen` class
     - Implemented `LevelFailedScreen` class
+    - Implemented `Level3` class
+    - Implemented `Level3Container` class
+    - Implemented `FileHandler` class
     - Created `UML Class Diagram` class
     - Debugged the code to ensure it works correctly.
   
@@ -185,10 +232,12 @@ The responsibilities were divided as follows:
     - Implemented classes related to Main Menu - `Setting`, `StartMenu`, `Load`, `SaveProgress`, `Quit`, `Profile` classes
     - Implemented `MainMenuScreen` class
     - Implemented `LevelMenuScreen` class
-    - Implemented `Level1` class
+    - Implemented `Level1`,`Level2` class
+    - Implemented `Level1Container`,`Level2Container` class
     - Implemented `PauseScreen` class
     - Implemented `AngryBird` class
     - Implemented `Handler` class
+    - Implemented `Player` class
     - Created `Use Case Diagram`
     - Documented the implementation ensuring clear documentation in `README`.
 
