@@ -15,11 +15,13 @@ level to unlock another level.
 2. [Classes](#classes)
 3. [Interfaces](#classes)
 4. [Abtract Classes](#abstract-class)
-5. [How to run?](#how-to-run)
-6. [GitHub Link](#github-link---angry-birds)
-7. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
-8. [Assets](#assets)
-9. [Contributions](#contribution)
+5. [Bonus Features](#bonus-features)
+6. [Design Pattern](#design-patterns)
+7. [How to run?](#how-to-run)
+8. [GitHub Link](#github-link---angry-birds)
+9. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
+10. [Assets](#assets)
+11. [Contributions](#contribution)
 
 ## Overview
 - This project is a fun game "Angry Bird" developed using LibGDX framework.
