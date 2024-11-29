@@ -1,20 +1,29 @@
 package com.game.angrybird.Materials;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public interface Material {
-    Body createQuad(BodyDef bodyDef, float x, float y, float width, float height);
+    void createQuad(BodyDef bodyDef, float x, float y, float width, float height, String type);
 
-    void drawPlankHorizontal(Body body);
+    void draw();
 
-    void drawPlankVertical(Body body);
+    void drawPlankHorizontal();
 
-    void drawBox(Body body);
+    void drawPlankVertical();
+
+    void drawBox();
 
     void destroy();
+
+    String getType();
+
+    Vector2 getSize();
 
     float getHealth();
 
     void setHealth(float v);
+
+    Body getBody();
 }

@@ -12,7 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.game.angrybird.AngryBird;
+import com.game.angrybird.FileHandler;
 import com.game.angrybird.Handler;
+
+import java.util.Objects;
 
 public class Profile {
 
@@ -52,22 +56,22 @@ public class Profile {
         textFieldStyle.cursor = cursorDrawable;
 
         inputField = new TextField("", textFieldStyle);
-        inputField.setText(mainMenuScreen.getGame().getUsername());
+        inputField.setText(mainMenuScreen.getGame().getPlayer().getUsername());
 
         inputField.setSize(mainMenuScreen.getViewport().getWorldWidth() / 2.3f, mainMenuScreen.getViewport().getWorldHeight() / 12f);
         inputField.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - inputField.getWidth() / 2 + 30, mainMenuScreen.getViewport().getWorldHeight() / 2 - inputField.getHeight() / 2 - 30);
 
-        profileScreen = new Texture(Gdx.files.internal("Profile Screen/Background.png"));
+        profileScreen = AngryBird.loadTextureSafely("Profile Screen/Background.png");
 
-        textField = new Image(new Texture(Gdx.files.internal("Profile Screen/TextField.png")));
+        textField = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Profile Screen/TextField.png")));
         textField.setSize(mainMenuScreen.getViewport().getWorldWidth() / 2.3f, mainMenuScreen.getViewport().getWorldHeight() / 12f);
         textField.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - textField.getWidth() / 2 + 10, mainMenuScreen.getViewport().getWorldHeight() / 2 - textField.getHeight() / 2 - 30);
 
-        save = new Image(new Texture(Gdx.files.internal("Profile Screen/SaveBtn.png")));
+        save = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Profile Screen/SaveBtn.png")));
         save.setSize(mainMenuScreen.getViewport().getWorldWidth() / 6.9f, mainMenuScreen.getViewport().getWorldHeight() / 10f);
         save.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - save.getWidth() / 2 + 10, mainMenuScreen.getViewport().getWorldHeight() / 2 - textField.getHeight() / 2 - 110);
 
-        close = new Image(new Texture(Gdx.files.internal("Profile Screen/closeBtn.png")));
+        close = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Profile Screen/closeBtn.png")));
         close.setSize(mainMenuScreen.getViewport().getWorldWidth() / 16.0f, mainMenuScreen.getViewport().getWorldHeight() / 10.0f);
         close.setPosition(mainMenuScreen.getViewport().getWorldWidth() - 195, mainMenuScreen.getViewport().getWorldHeight() - 115);
 
@@ -78,7 +82,7 @@ public class Profile {
                 mainMenuScreen.setSettingOpen(true);
                 mainMenuScreen.setProfileOpen(false);
                 System.out.println("Close Clicked.");
-                inputField.setText(mainMenuScreen.getGame().getUsername());
+                inputField.setText(mainMenuScreen.getGame().getPlayer().getUsername());
             }
         });
 
@@ -91,18 +95,19 @@ public class Profile {
 
                 String text = inputField.getText();
                 if (!text.isEmpty()) {
-                    mainMenuScreen.getGame().setUsername(text);
-                    inputField.setText(mainMenuScreen.getGame().getUsername());
+                    mainMenuScreen.getGame().getPlayer().setUsername(text);
+                    inputField.setText(mainMenuScreen.getGame().getPlayer().getUsername());
+                    FileHandler.updatePlayer(mainMenuScreen.getGame().getPlayer());
                 }
                 else{
-                    inputField.setText(mainMenuScreen.getGame().getUsername());
+                    inputField.setText(mainMenuScreen.getGame().getPlayer().getUsername());
                 }
                 mainMenuScreen.startMenu.updateUsername();
             }
         });
 
-        Handler.hoverEffect(close);
-        Handler.hoverEffect(save);
+        Handler.hoverEffect(close, mainMenuScreen.getGame());
+        Handler.hoverEffect(save, mainMenuScreen.getGame());
 
     }
 

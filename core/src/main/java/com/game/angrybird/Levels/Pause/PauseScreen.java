@@ -52,7 +52,6 @@ public class PauseScreen implements Screen {
 
         level.getGame().levelMusic.pause();
         this.level = level;
-
         // initialization
         camera = new OrthographicCamera();
         viewport = new StretchViewport(1000, 600, camera);

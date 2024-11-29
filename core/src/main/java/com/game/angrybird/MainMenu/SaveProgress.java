@@ -3,9 +3,14 @@ package com.game.angrybird.MainMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.game.angrybird.AngryBird;
+import com.game.angrybird.FileHandler;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class SaveProgress {
@@ -25,11 +30,11 @@ public class SaveProgress {
 
     public void create() {
 
-        saveProgressScreen = new Texture(Gdx.files.internal("Save Progress Screen/Background.png"));
+        saveProgressScreen = AngryBird.loadTextureSafely("Save Progress Screen/Background.png");
 
-        saveProgress = new Texture(Gdx.files.internal("Save Progress Screen/SavingBar.png"));
+        saveProgress = AngryBird.loadTextureSafely("Save Progress Screen/SavingBar.png");
 
-        saved = new Image(new Texture(Gdx.files.internal("Save Progress Screen/SaveBtn.png")));
+        saved = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Save Progress Screen/SaveBtn.png")));
         saved.setSize(mainMenuScreen.getViewport().getWorldWidth() / 6.0f, mainMenuScreen.getViewport().getWorldHeight() / 9f);
         saved.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - saved.getWidth() / 2 + 10, mainMenuScreen.getViewport().getWorldHeight() / 2 - saved.getHeight() / 2 - 120);
 
@@ -57,6 +62,11 @@ public class SaveProgress {
         }
 
         mainMenuScreen.getBatch().end();
+
+//        ArrayList<AngryBird> arr = FileHandler.getSavedGames();
+//        arr.add(mainMenuScreen.getGame());
+//        FileHandler.addtoSavedGames(arr);
+
     }
 
     public void destroy(){

@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.game.angrybird.AngryBird;
 import com.game.angrybird.Handler;
+
+import java.util.Objects;
 
 public class Quit {
 
@@ -23,13 +26,13 @@ public class Quit {
 
     public void create() {
 
-        exitScreen = new Texture(Gdx.files.internal("Quit Screen/Background.png"));
+        exitScreen = AngryBird.loadTextureSafely("Quit Screen/Background.png");
 
-        cross = new Image(new Texture(Gdx.files.internal("Quit Screen/CrossBtn.png")));
+        cross = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Quit Screen/CrossBtn.png")));
         cross.setSize(mainMenuScreen.getViewport().getWorldWidth() / 6.0f, mainMenuScreen.getViewport().getWorldHeight() / 6.0f);
         cross.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2f - 90, mainMenuScreen.getViewport().getWorldHeight() / 2f - 120);
 
-        tick = new Image(new Texture(Gdx.files.internal("Quit Screen/TickBtn.png")));
+        tick = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Quit Screen/TickBtn.png")));
         tick.setSize(mainMenuScreen.getViewport().getWorldWidth() / 6.0f, mainMenuScreen.getViewport().getWorldHeight() / 6.0f);
         tick.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2f - 90, mainMenuScreen.getViewport().getWorldHeight() / 2f - 20);
 
@@ -49,8 +52,8 @@ public class Quit {
             }
         });
 
-        Handler.hoverEffect(cross);
-        Handler.hoverEffect(tick);
+        Handler.hoverEffect(cross, mainMenuScreen.getGame());
+        Handler.hoverEffect(tick, mainMenuScreen.getGame());
 
     }
 

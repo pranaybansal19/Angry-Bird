@@ -13,7 +13,10 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.game.angrybird.AngryBird;
 import com.game.angrybird.Birds.Bird;
+
+import java.util.Objects;
 
 public class SlingShot {
 
@@ -33,7 +36,7 @@ public class SlingShot {
     public void create(float x, float y, float width, float height) {
 
         slingshotPosition = new Vector2(x, y);
-        slingShot = new Image(new Texture(Gdx.files.internal("Slingshot/Slingshot.png")));
+        slingShot = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Slingshot/Slingshot.png")));
         slingShot.setSize(width, height);
         slingShot.setPosition(x, y);
 
@@ -41,7 +44,6 @@ public class SlingShot {
 
     public void launchProjectile(Vector2 releasePoint, Vector2 initialTouch, Body projectileBody) {
         Vector2 launchVector = initialTouch.cpy().sub(releasePoint);
-        System.out.println(launchVector.x + " " + launchVector.y);
         projectileBody.applyLinearImpulse(launchVector.scl(33), projectileBody.getWorldCenter(), true);
     }
 

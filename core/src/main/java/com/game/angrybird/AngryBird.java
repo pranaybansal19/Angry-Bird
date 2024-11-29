@@ -2,11 +2,13 @@ package com.game.angrybird;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 import com.game.angrybird.Loading.LoadingScreen;
 import com.game.angrybird.MainMenu.MainMenuScreen;
 import com.game.angrybird.Levels.*;
+
 
 public class AngryBird extends Game {
 
@@ -16,53 +18,31 @@ public class AngryBird extends Game {
     private Level level2;
     private Level level3;
 
-    private boolean level1Locked = false;
-    private boolean level2Locked = true;
-    private boolean level3Locked = true;
-
-    private int level1BestScore = 0;
-    private int level2BestScore = 0;
-    private int level3BestScore = 0;
-
-    private String username = "Player";
-
     public Music backgroundMusic;
     public Music levelMusic;
     public Music launchBird;
-    public Music destroyed ;
+    public Music destroyed;
+    public Music glassDestroyed;
+    public Music stoneDestroyed;
     public Music click;
+    public Music sling;
+    public Music bomb;
 
+    private Player player = new Player();
 
-    public void setLevel1BestScore(int level1BestScore) {
-        this.level1BestScore = level1BestScore;
+    private static AngryBird instance = null;
+
+    public static AngryBird getInstance() {
+        if (instance == null) {
+            instance = new AngryBird();
+        }
+        return instance;
     }
 
-    public void setLevel2BestScore(int level2BestScore) {
-        this.level2BestScore = level2BestScore;
-    }
+    private AngryBird(){}
 
-    public void setLevel3BestScore(int level3BestScore) {
-        this.level3BestScore = level3BestScore;
-    }
-
-    public int getLevel1BestScore() {
-        return level1BestScore;
-    }
-
-    public int getLevel2BestScore() {
-        return level2BestScore;
-    }
-
-    public int getLevel3BestScore() {
-        return level3BestScore;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
+    public Player getPlayer() {
+        return player;
     }
 
     public Level getLevel1() {
@@ -77,30 +57,6 @@ public class AngryBird extends Game {
         return level3;
     }
 
-    public void setLevel1Locked(boolean level1Locked) {
-        this.level1Locked = level1Locked;
-    }
-
-    public void setLevel2Locked(boolean level2Locked) {
-        this.level2Locked = level2Locked;
-    }
-
-    public void setLevel3Locked(boolean level3Locked) {
-        this.level3Locked = level3Locked;
-    }
-
-    public boolean isLevel1Locked() {
-        return level1Locked;
-    }
-
-    public boolean isLevel2Locked() {
-        return level2Locked;
-    }
-
-    public boolean isLevel3Locked() {
-        return level3Locked;
-    }
-
     public LevelMenuScreen getLevelMenuScreen() {
         return levelMenuScreen;
     }
@@ -109,15 +65,15 @@ public class AngryBird extends Game {
         return mainMenuScreen;
     }
 
-    public void setLevel1(Level level1) {
+    public void setLevel1(Level1 level1) {
         this.level1 = level1;
     }
 
-    public void setLevel2(Level level2) {
+    public void setLevel2(Level2 level2) {
         this.level2 = level2;
     }
 
-    public void setLevel3(Level level3) {
+    public void setLevel3(Level3 level3) {
         this.level3 = level3;
     }
 
@@ -129,8 +85,14 @@ public class AngryBird extends Game {
         this.mainMenuScreen = mainMenuScreen;
     }
 
+
+
     @Override
     public void create() {
+
+        FileHandler.initialize();
+
+        player = FileHandler.getPlayer();
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Audio/backgroundMusic.ogg"));
         backgroundMusic.setLooping(true);
@@ -138,15 +100,17 @@ public class AngryBird extends Game {
 
         launchBird = Gdx.audio.newMusic(Gdx.files.internal("Audio/launch.mp3"));
         destroyed = Gdx.audio.newMusic(Gdx.files.internal("Audio/destroyed.mp3"));
+        glassDestroyed = Gdx.audio.newMusic(Gdx.files.internal("Audio/GlassDestroyed.mp3"));
+        stoneDestroyed = Gdx.audio.newMusic(Gdx.files.internal("Audio/StoneDestroyed.mp3"));
         click = Gdx.audio.newMusic(Gdx.files.internal("Audio/button_click.mp3"));
         levelMusic = Gdx.audio.newMusic(Gdx.files.internal("Audio/levelMusic.mp3"));
+        sling = Gdx.audio.newMusic(Gdx.files.internal("Audio/Slingshot.mp3"));
+        bomb = Gdx.audio.newMusic(Gdx.files.internal("Audio/bomb.mp3"));
 
         mainMenuScreen = new MainMenuScreen(this);
         levelMenuScreen = new LevelMenuScreen(this);
 
-//        this.setScreen(new LoadingScreen(this, mainMenuScreen));
-        backgroundMusic.stop();
-        this.setScreen(new Level3(this));
+        this.setScreen(new LoadingScreen(this, mainMenuScreen));
     }
 
     @Override
@@ -164,6 +128,15 @@ public class AngryBird extends Game {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+    }
+
+    public static Texture loadTextureSafely(String filePath) {
+        FileHandle file = Gdx.files.internal(filePath);
+        if (!file.exists()) {
+            System.err.println("Missing asset: " + filePath);
+            return null;
+        }
+        return new Texture(file);
     }
 
 }

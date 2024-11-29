@@ -1,5 +1,6 @@
 package com.game.angrybird.Pigs;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
@@ -9,9 +10,15 @@ public interface Pig {
 
     void setHealth(float health);
 
-    Body create(BodyDef bodyDef, float x, float y, float radius);
+    TextureRegion getPig();
 
-    void draw(Body body, float width, float height);
+    TextureRegion getPigDamaged();
+
+    void create(BodyDef bodyDef, float x, float y, float radius);
+
+    void draw(float width, float height);
 
     void destroy();
+
+    Body getBody();
 }

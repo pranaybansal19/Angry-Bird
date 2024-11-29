@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.angrybird.AngryBird;
 import com.game.angrybird.Handler;
 
+import java.util.Objects;
+
 public class LevelMenuScreen implements Screen {
 
     private AngryBird game;
@@ -45,31 +47,31 @@ public class LevelMenuScreen implements Screen {
     }
 
     public void createLevelMenuScreen() {
-        background = new Texture(Gdx.files.internal("Level Menu Screen/Background.png"));
+        background = AngryBird.loadTextureSafely("Level Menu Screen/Background.png");
 
-        level1 = new Image(new Texture(Gdx.files.internal("Level Menu Screen/Level1Btn.png")));
+        level1 = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Menu Screen/Level1Btn.png")));
         level1.setSize(viewport.getWorldWidth() / 13f, viewport.getWorldHeight() / 9f);
         level1.setPosition(viewport.getWorldWidth() / 2 - level1.getWidth() / 2 - 90 + 3, viewport.getWorldHeight() / 2 - level1.getHeight() / 2 + 120);
 
-        if (game.isLevel2Locked()) {
-            level2 = new Image(new Texture(Gdx.files.internal("Level Menu Screen/Level_Locked.png")));
+        if (game.getPlayer().isLevel2Locked()) {
+            level2 = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Menu Screen/Level_Locked.png")));
         } else {
-            level2 = new Image(new Texture(Gdx.files.internal("Level Menu Screen/Level2Btn.png")));
+            level2 = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Menu Screen/Level2Btn.png")));
         }
 
         level2.setSize(viewport.getWorldWidth() / 13f, viewport.getWorldHeight() / 9f);
         level2.setPosition(viewport.getWorldWidth() / 2 - level2.getWidth() / 2 - 90 + 110 - 5, viewport.getWorldHeight() / 2 - level2.getHeight() / 2 + 120);
 
-        if (game.isLevel3Locked()) {
-            level3 = new Image(new Texture(Gdx.files.internal("Level Menu Screen/Level_Locked.png")));
+        if (game.getPlayer().isLevel3Locked()) {
+            level3 = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Menu Screen/Level_Locked.png")));
         } else {
-            level3 = new Image(new Texture(Gdx.files.internal("Level Menu Screen/Level3Btn.png")));
+            level3 = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Menu Screen/Level3Btn.png")));
         }
 
         level3.setSize(viewport.getWorldWidth() / 13f, viewport.getWorldHeight() / 9f);
         level3.setPosition(viewport.getWorldWidth() / 2 - level3.getWidth() / 2 - 90 + 220 - 10, viewport.getWorldHeight() / 2 - level3.getHeight() / 2 + 120);
 
-        back = new Image(new Texture(Gdx.files.internal("Level Menu Screen/BackBtn.png")));
+        back = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Menu Screen/BackBtn.png")));
         back.setSize(viewport.getWorldWidth() / 16f, viewport.getWorldHeight() / 12f);
         back.setPosition(viewport.getWorldWidth() / 2 - back.getWidth() / 2 - 290, viewport.getWorldHeight() / 2 - back.getHeight() / 2 + 120 + 100);
 
@@ -85,7 +87,7 @@ public class LevelMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level 1 Clicked.");
-                game.setLevel1(new Level1(game));
+                game.setLevel1(new Level1(game,null));
                 game.setScreen((Screen) game.getLevel1());
 
                 game.backgroundMusic.stop();
@@ -97,12 +99,12 @@ public class LevelMenuScreen implements Screen {
             }
         });
 
-        if (!game.isLevel2Locked()) {
+        if (!game.getPlayer().isLevel2Locked()) {
             level2.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     System.out.println("Level 2 Clicked.");
-                    game.setLevel2(new Level2(game));
+                    game.setLevel2(new Level2(game,null));
                     game.setScreen((Screen) game.getLevel2());
 
                     game.backgroundMusic.stop();
@@ -115,12 +117,12 @@ public class LevelMenuScreen implements Screen {
             });
         }
 
-        if (!game.isLevel3Locked()) {
+        if (!game.getPlayer().isLevel3Locked()) {
             level3.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     System.out.println("Level 3 Clicked.");
-                    game.setLevel3(new Level3(game));
+                    game.setLevel3(new Level3(game,null));
                     game.setScreen((Screen) game.getLevel3());
 
                     game.backgroundMusic.stop();
@@ -134,10 +136,10 @@ public class LevelMenuScreen implements Screen {
         }
 
 
-        Handler.hoverEffect(back);
-        Handler.hoverEffect(level1);
-        Handler.hoverEffect(level2);
-        Handler.hoverEffect(level3);
+        Handler.hoverEffect(back,game);
+        Handler.hoverEffect(level1,game);
+        Handler.hoverEffect(level2,game);
+        Handler.hoverEffect(level3,game);
     }
 
     public void drawLevelMenuScreen() {

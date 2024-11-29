@@ -12,7 +12,7 @@ public class Lwjgl2Launcher {
     }
 
     private static LwjglApplication createApplication() {
-        return new LwjglApplication(new AngryBird(), getDefaultConfiguration());
+        return new LwjglApplication(AngryBird.getInstance(), getDefaultConfiguration());
     }
 
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
@@ -24,7 +24,7 @@ public class Lwjgl2Launcher {
         configuration.forceExit = false;
 
         for (int size : new int[] { 128, 64, 32, 16 }) {
-            configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
+            configuration.addIcon("libgdx" + size + "Background.png", FileType.Internal);
         }
         return configuration;
     }

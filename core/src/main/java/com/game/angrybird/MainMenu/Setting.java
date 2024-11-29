@@ -1,12 +1,13 @@
 package com.game.angrybird.MainMenu;
 
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.game.angrybird.AngryBird;
 import com.game.angrybird.Handler;
+
+import java.util.Objects;
 
 public class Setting {
 
@@ -36,29 +37,29 @@ public class Setting {
 
     public void create() {
 
-        settingScreen = new Texture(Gdx.files.internal("Setting Screen/Background.png"));
+        settingScreen = AngryBird.loadTextureSafely("Setting Screen/Background.png");
 
-        close = new Image(new Texture(Gdx.files.internal("Setting Screen/CloseBtn.png")));
+        close = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Setting Screen/CloseBtn.png")));
         close.setSize(mainMenuScreen.getViewport().getWorldWidth() / 16.0f, mainMenuScreen.getViewport().getWorldHeight() / 10.0f);
         close.setPosition(mainMenuScreen.getViewport().getWorldWidth() - 150, mainMenuScreen.getViewport().getWorldHeight() - 80);
 
-        musicON = new Image(new Texture(Gdx.files.internal("Setting Screen/SoundON.png")));
+        musicON = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Setting Screen/SoundON.png")));
         musicON.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         musicON.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - musicON.getWidth() / 2 - 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - musicON.getHeight() / 2 + 60);
 
-        musicOFF = new Image(new Texture(Gdx.files.internal("Setting Screen/SoundOFF.png")));
+        musicOFF = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Setting Screen/SoundOFF.png")));
         musicOFF.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         musicOFF.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - musicOFF.getWidth() / 2 - 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - musicOFF.getHeight() / 2 + 60);
 
-        soundON = new Image(new Texture(Gdx.files.internal("Setting Screen/MusicON.png")));
+        soundON = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Setting Screen/MusicON.png")));
         soundON.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         soundON.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - soundON.getWidth() / 2 + 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - soundON.getHeight() / 2 + 60);
 
-        soundOFF = new Image(new Texture(Gdx.files.internal("Setting Screen/MusicOFF.png")));
+        soundOFF = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Setting Screen/MusicOFF.png")));
         soundOFF.setSize(mainMenuScreen.getViewport().getWorldWidth() / 7.5f, mainMenuScreen.getViewport().getWorldHeight() / 5.5f);
         soundOFF.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - soundOFF.getWidth() / 2 + 220, mainMenuScreen.getViewport().getWorldHeight() / 2 - soundOFF.getHeight() / 2 + 60);
 
-        changeProfile = new Image(new Texture(Gdx.files.internal("Setting Screen/ChangeProfileBtn.png")));
+        changeProfile = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Setting Screen/ChangeProfileBtn.png")));
         changeProfile.setSize(mainMenuScreen.getViewport().getWorldWidth() / 6f, mainMenuScreen.getViewport().getWorldHeight() / 4f);
         changeProfile.setPosition(mainMenuScreen.getViewport().getWorldWidth() / 2 - changeProfile.getWidth() / 2 + 10, mainMenuScreen.getViewport().getWorldHeight() / 2 - changeProfile.getHeight() / 2 + 70);
 
@@ -116,12 +117,12 @@ public class Setting {
             }
         });
 
-        Handler.hoverEffect(close);
-        Handler.hoverEffect(musicON);
-        Handler.hoverEffect(musicOFF);
-        Handler.hoverEffect(soundON);
-        Handler.hoverEffect(soundOFF);
-        Handler.hoverEffect(changeProfile);
+        Handler.hoverEffect(close, mainMenuScreen.getGame());
+        Handler.hoverEffect(musicON, mainMenuScreen.getGame());
+        Handler.hoverEffect(musicOFF, mainMenuScreen.getGame());
+        Handler.hoverEffect(soundON, mainMenuScreen.getGame());
+        Handler.hoverEffect(soundOFF, mainMenuScreen.getGame());
+        Handler.hoverEffect(changeProfile, mainMenuScreen.getGame());
 
     }
 

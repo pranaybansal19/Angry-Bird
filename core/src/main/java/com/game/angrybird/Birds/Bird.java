@@ -13,15 +13,20 @@ public interface Bird {
     void setBatch(Batch batch);
     void setBird(TextureRegion bird);
 
+    void setAbilityUsed(boolean abilityUsed);
+
+    void setBody(Body body);
+
     // Getters
     World getWorld();
     Batch getBatch();
     TextureRegion getBird();
+    Body getBody();
 
-    Body create(BodyDef bodyDef, float x, float y, float radius);
-    void draw(Body body, float width, float height);
+    boolean isAbilityUsed();
+
+    void create(BodyDef bodyDef, float x, float y, float radius);
+    void draw(float width, float height);
     void destroy();
-    void useSpecialAbility();
 
-    boolean isClicked(Body body, float x, float y);
 }

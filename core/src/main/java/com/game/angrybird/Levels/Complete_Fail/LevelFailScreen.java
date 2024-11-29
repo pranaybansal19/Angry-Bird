@@ -14,7 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.game.angrybird.AngryBird;
 import com.game.angrybird.Levels.*;
+
+import java.util.Objects;
 
 public class LevelFailScreen implements Screen {
 
@@ -54,10 +57,10 @@ public class LevelFailScreen implements Screen {
 
     public void createScreen() {
 
-        background = new Texture(Gdx.files.internal("Level Fail Screen/Background.png"));
+        background = AngryBird.loadTextureSafely("Level Fail Screen/Background.png");
 
-        retry = new Image(new Texture(Gdx.files.internal("Level Fail Screen/Button.png")));
-        menu = new Image(new Texture(Gdx.files.internal("Level Fail Screen/Button.png")));
+        retry = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Fail Screen/Button.png")));
+        menu = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Fail Screen/Button.png")));
 
         retry.setSize(viewport.getWorldWidth() / 5f, viewport.getWorldHeight() / 8f);
         retry.setPosition(viewport.getWorldWidth() / 2 - retry.getWidth() / 2 + 5, viewport.getWorldHeight() / 2 - retry.getHeight() / 2 - 76);
@@ -73,17 +76,17 @@ public class LevelFailScreen implements Screen {
 
                 if (level instanceof Level1) {
                     System.out.println("Level 1 Restarted.");
-                    level.getGame().setLevel1(new Level1(level.getGame()));
+                    level.getGame().setLevel1(new Level1(level.getGame(),null));
                     level.getGame().setScreen((Screen) level.getGame().getLevel1());
                 }
                 if (level instanceof Level2) {
                     System.out.println("Level 2 Restarted.");
-                    level.getGame().setLevel2(new Level2(level.getGame()));
+                    level.getGame().setLevel2(new Level2(level.getGame(),null));
                     level.getGame().setScreen((Screen) level.getGame().getLevel2());
                 }
                 if (level instanceof Level3) {
                     System.out.println("Level 3 Restarted.");
-                    level.getGame().setLevel3(new Level3(level.getGame()));
+                    level.getGame().setLevel3(new Level3(level.getGame(),null));
                     level.getGame().setScreen((Screen) level.getGame().getLevel3());
                 }
 

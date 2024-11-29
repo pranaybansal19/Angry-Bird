@@ -18,6 +18,8 @@ import com.game.angrybird.AngryBird;
 import com.game.angrybird.Handler;
 import com.game.angrybird.Levels.*;
 
+import java.util.Objects;
+
 public class LevelCompleteScreen implements Screen {
 
     private Level level;
@@ -54,19 +56,17 @@ public class LevelCompleteScreen implements Screen {
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
 
-        System.out.println("Level Complete Constructor Called");
-
         createScreen();
     }
 
     public void createScreen() {
 
-        background = new Texture(Gdx.files.internal("Level Complete Screen/Background.png"));
+        background = AngryBird.loadTextureSafely("Level Complete Screen/Background.png");
 
-        nextLevel = new Image(new Texture(Gdx.files.internal("Level Complete Screen/NextLevelBtn.png")));
-        restart = new Image(new Texture(Gdx.files.internal("Level Complete Screen/RestartBtn.png")));
-        menu = new Image(new Texture(Gdx.files.internal("Level Complete Screen/MenuBtn.png")));
-        star3 = new Image(new Texture(Gdx.files.internal("Level Complete Screen/Star(3).png")));
+        nextLevel = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Complete Screen/NextLevelBtn.png")));
+        restart = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Complete Screen/RestartBtn.png")));
+        menu = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Complete Screen/MenuBtn.png")));
+        star3 = new Image(Objects.requireNonNull(AngryBird.loadTextureSafely("Level Complete Screen/Star(3).png")));
 
         nextLevel.setSize(viewport.getWorldWidth() / 6f, viewport.getWorldHeight() / 20.0f);
         nextLevel.setPosition(viewport.getWorldWidth() / 2 - nextLevel.getWidth() / 2 + 20, viewport.getWorldHeight() / 2 - nextLevel.getHeight() / 2 - 33 + 4);
@@ -87,12 +87,12 @@ public class LevelCompleteScreen implements Screen {
 
                 if (level instanceof Level1) {
                     System.out.println("Level 1 Completed.");
-                    game.setLevel2(new Level2(game));
+                    game.setLevel2(new Level2(game,null));
                     game.setScreen((Screen) game.getLevel2());
                 }
                 if (level instanceof Level2) {
                     System.out.println("Level 2 Completed.");
-                    game.setLevel3(new Level3(game));
+                    game.setLevel3(new Level3(game,null));
                     game.setScreen((Screen) game.getLevel3());
                 }
                 if (level instanceof Level3) {
@@ -118,17 +118,17 @@ public class LevelCompleteScreen implements Screen {
 
                 if (level instanceof Level1) {
                     System.out.println("Level 1 Restarted.");
-                    game.setLevel1(new Level1(game));
+                    game.setLevel1(new Level1(game,null));
                     game.setScreen((Screen) game.getLevel1());
                 }
                 if (level instanceof Level2) {
                     System.out.println("Level 2 Restarted.");
-                    game.setLevel2(new Level2(game));
+                    game.setLevel2(new Level2(game,null));
                     game.setScreen((Screen) game.getLevel2());
                 }
                 if (level instanceof Level3) {
                     System.out.println("Level 3 Restarted.");
-                    game.setLevel3(new Level3(game));
+                    game.setLevel3(new Level3(game,null));
                     game.setScreen((Screen) game.getLevel3());
                 }
 
@@ -205,7 +205,6 @@ public class LevelCompleteScreen implements Screen {
 
     @Override
     public void show() {
-        System.out.println("Level Complete show called");
         Gdx.input.setInputProcessor(stage);
     }
 

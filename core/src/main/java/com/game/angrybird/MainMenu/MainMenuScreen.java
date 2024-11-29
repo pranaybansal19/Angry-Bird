@@ -66,6 +66,10 @@ public class MainMenuScreen implements Screen {
         return settings;
     }
 
+    public StartMenu getStartMenu() {
+        return startMenu;
+    }
+
     public boolean isExitOpen() {
         return exitOpen;
     }
@@ -151,9 +155,9 @@ public class MainMenuScreen implements Screen {
 
         settings = new Setting(this);
         profile = new Profile(this);
-        saveProgress = new SaveProgress(this);
         startMenu = new StartMenu(this);
         quit = new Quit(this);
+        saveProgress = new SaveProgress(this);
         load = new Load(this);
 
         game.backgroundMusic.play();
@@ -172,26 +176,26 @@ public class MainMenuScreen implements Screen {
 
             quit.destroy();
             profile.destroy();
-            saveProgress.destroy();
             startMenu.destroy();
+            saveProgress.destroy();
             load.destroy();
 
             settings.draw();
         } else if (exitOpen) {
 
             profile.destroy();
-            saveProgress.destroy();
             startMenu.destroy();
             settings.destroy();
+            saveProgress.destroy();
             load.destroy();
 
             quit.draw();
         } else if (profileOpen) {
 
-            saveProgress.destroy();
             startMenu.destroy();
             settings.destroy();
             quit.destroy();
+            saveProgress.destroy();
             load.destroy();
 
             profile.draw();
@@ -206,6 +210,7 @@ public class MainMenuScreen implements Screen {
             saveProgress.draw();
         } else if (loadOpen) {
 
+
             profile.destroy();
             startMenu.destroy();
             settings.destroy();
@@ -215,12 +220,11 @@ public class MainMenuScreen implements Screen {
             load.draw();
         } else {
 
-
+            load.destroy();
             profile.destroy();
-            saveProgress.destroy();
             settings.destroy();
             quit.destroy();
-            load.destroy();
+            saveProgress.destroy();
 
             startMenu.draw();
         }

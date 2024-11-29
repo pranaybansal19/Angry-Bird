@@ -30,6 +30,20 @@ allprojects {
 configure(subprojects) {
   apply plugin: 'java-library'
   sourceCompatibility = 11
+  dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    testImplementation "junit:junit:4.13.2"
+
+    testImplementation "org.mockito:mockito-core:5.5.0"
+
+    testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    testImplementation "com.github.stefanbirkner:system-lambda:1.2.1"
+
+
+
+  }
 
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.

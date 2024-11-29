@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Handler {
 
-    public static void hoverEffect(Image image){
+    public static void hoverEffect(Image image, AngryBird game) {
 
         image.setOrigin(image.getWidth() / 2, image.getHeight() / 2);
 
@@ -26,7 +26,10 @@ public class Handler {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.audio.newMusic(Gdx.files.internal("Audio/button_click.mp3")).play();
+
+                if (game.getMainMenuScreen().getSettings().isSound()) {
+                    Gdx.audio.newMusic(Gdx.files.internal("Audio/button_click.mp3")).play();
+                }
             }
         });
 

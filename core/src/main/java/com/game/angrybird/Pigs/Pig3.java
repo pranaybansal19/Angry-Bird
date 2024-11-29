@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.game.angrybird.AngryBird;
+
+import java.util.Objects;
 
 public class Pig3 implements Pig {
 
@@ -14,8 +17,34 @@ public class Pig3 implements Pig {
 
     private float health = 350;
 
-    private TextureRegion pig,pigDamaged;
+    private Body body;
+    private TextureRegion pig, pigDamaged;
 
+    public Pig3() {}
+
+
+    public Pig3(World world, Batch batch) {
+        this.world = world;
+        this.batch = batch;
+
+        pig = new TextureRegion(Objects.requireNonNull(AngryBird.loadTextureSafely("Pigs/Pig3.png")));
+        pigDamaged = new TextureRegion(Objects.requireNonNull(AngryBird.loadTextureSafely("Pigs/Pig3Damaged.png")));
+    }
+
+    @Override
+    public TextureRegion getPig() {
+        return pig;
+    }
+
+    @Override
+    public TextureRegion getPigDamaged() {
+        return pigDamaged;
+    }
+
+    @Override
+    public Body getBody() {
+        return body;
+    }
 
     @Override
     public float getHealth() {
@@ -27,20 +56,11 @@ public class Pig3 implements Pig {
         this.health = health;
     }
 
-
-    public Pig3(World world, Batch batch) {
-        this.world = world;
-        this.batch = batch;
-
-        pig = new TextureRegion(new Texture(Gdx.files.internal("Pigs/Pig3.png")));
-        pigDamaged = new TextureRegion(new Texture(Gdx.files.internal("Pigs/Pig3Damaged.png")));
-    }
-
     @Override
-    public Body create(BodyDef bodyDef, float x, float y, float radius) {
+    public void create(BodyDef bodyDef, float x, float y, float radius) {
         bodyDef.position.set(x, y);
 
-        Body body = world.createBody(bodyDef);
+        body = world.createBody(bodyDef);
 
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
@@ -55,11 +75,14 @@ public class Pig3 implements Pig {
         body.createFixture(fixtureDef);
         circle.dispose();
 
-        return body;
     }
 
     @Override
-    public void draw(Body body, float width, float height) {
+    public void draw(float width, float height) {
+
+        if (health <= 0) {
+            return;
+        }
 
         Vector2 position = body.getPosition();
         float angle = body.getAngle();
