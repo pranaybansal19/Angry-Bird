@@ -7,7 +7,6 @@
 
 [![Java Version](https://img.shields.io/badge/JDK-8%2B-blue.svg)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![LibGDX](https://img.shields.io/badge/LibGDX-v1.10.0-green.svg)](https://libgdx.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
@@ -20,7 +19,6 @@
 4. [How to Run](#how-to-run)
 5. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
 6. [Assets](#assets)
-7. [Implementation Details](#implementation-details)
 
 ---
 
@@ -28,7 +26,7 @@
 
 ## Overview
 
-Angry Bird is a modern reimagining of the classic puzzle game, developed using the LibGDX framework. In this game, players use a slingshot to launch birds at structures built by pigs. The objective is to demolish these structures and eliminate all pigs in a level to unlock the next challenge. Combining engaging gameplay with physics-based interactions and exciting bonus features, Angry Bird delivers a dynamic and immersive gaming experience.
+Angry Bird is a modern reimagining of the classic puzzle game developed using the LibGDX framework. In this game, players use a slingshot to launch birds at structures built by pigs. The objective is to demolish these structures and eliminate all pigs in a level to unlock the next challenge. Combining engaging gameplay with physics-based interactions and exciting bonus features, Angry Bird delivers a dynamic and immersive gaming experience.
 
 Explore further details on the project's architecture and design by visiting our [Implementation Details](implementation.md) document.
 
