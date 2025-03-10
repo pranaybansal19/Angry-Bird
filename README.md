@@ -3,47 +3,57 @@
 ---
 
 # Angry Bird
+## A LibGDX-based Puzzle Game
 
-Angry Birds is a popular puzzle video game. In every level, the player uses a slingshot to launch the birds at the pigs
-that are standing on buildings made of blocks. When a bird is launched, it can hit the buildings and make the blocks break. This can make the
-pigs fall and disappear. The bird can also hit the pig itself to destroy it. The player has to destroy all the pigs in the
-level to unlock another level.
+[![Java Version](https://img.shields.io/badge/JDK-8%2B-blue.svg)](https://www.oracle.com/java/technologies/javase-downloads.html)
+[![LibGDX](https://img.shields.io/badge/LibGDX-v1.10.0-green.svg)](https://libgdx.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Table of Content
+---
 
-1. [Overview](#Overview)
-2. [Classes](#classes)
-3. [Interfaces](#classes)
-4. [Abtract Classes](#abstract-class)
-5. [Bonus Features](#bonus-features)
-6. [Design Pattern](#design-patterns)
-7. [How to run?](#how-to-run)
-8. [GitHub Link](#github-link---angry-birds)
-9. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
-10. [Assets](#assets)
-11. [Contributions](#contribution)
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Bonus Features](#bonus-features)
+3. [Design Patterns Used](#design-patterns-used)
+4. [How to Run](#how-to-run)
+5. [Learning and Troubleshooting Resources](#learning-and-troubleshooting-resources)
+6. [Assets](#assets)
+7. [Implementation Details](#implementation-details)
+
+---
+
+
 
 ## Overview
-- This project is a fun game "Angry Bird" developed using LibGDX framework.
+
+Angry Bird is a modern reimagining of the classic puzzle game, developed using the LibGDX framework. In this game, players use a slingshot to launch birds at structures built by pigs. The objective is to demolish these structures and eliminate all pigs in a level to unlock the next challenge. Combining engaging gameplay with physics-based interactions and exciting bonus features, Angry Bird delivers a dynamic and immersive gaming experience.
+
+Explore further details on the project's architecture and design by visiting our [Implementation Details](implementation.md) document.
+
+---
 
 ## Bonus Features
 
-1. Birds can use **Special Abilities** such as -
-   1. `Red Bird` size increases 
-   2. `Yellow Bird` speed increases
-   3. `Black Bird` explodes
-   4. `Blue Bird` split into three smaller `Blue Birds`
+1. **Bird Special Abilities:**
+   - **Red Bird:** Temporarily increases in size for extra impact.
+   - **Yellow Bird:** Gains a burst of speed to break through defenses.
+   - **Black Bird:** Explodes on impact, causing area damage.
+   - **Blue Bird:** Splits into three smaller birds mid-flight.
+2. **Game Save System:**
+   - Players can store and load multiple saved game states.
 
-2. A Player can store any number of saved games which can be loaded.
+---
 
+## Design Patterns Used
 
-## Design Patterns
+- **Singleton Pattern:**  
+  Ensures that the `AngryBird` class has only one instance throughout the application.
+- **Facade Pattern:**  
+  Simplifies interactions by abstracting the complexity of managing different game levels (e.g., `Level1`, `Level2`, `Level3`).
 
-1. ### Singleton Pattern
-   - `AngryBird` class can only have one instance. 
-
-2. ### Facade Pattern
-   - hiding the complex code of `Level1`, `Level2`, `Level3`.
+---
 
 ## How to run?
 
@@ -53,9 +63,6 @@ level to unlock another level.
   2. Build the project : `gradlew build`
   3. To run tests : `gradlew test`
   4. Run the project : `gradlew lwjgl3:run`
-
-    
-## Github Link - [Angry Birds](https://github.com/pranaybansal19/Angry-Bird)
 
 ## Learning and Troubleshooting Resources
 
